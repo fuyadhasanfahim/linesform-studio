@@ -10,13 +10,30 @@
   },
   "pricing": {
     "currency": "USD",
+    "tier": "Standard, Global",
+    "perMillionTokens": {
+      "input": 1.5,
+      "textAndReasoningOutput": 7.5,
+      "imageOutput": 30.0
+    },
+    "outputTokensPerImage": {
+      "1K": 1120,
+      "2K": 1680,
+      "4K": 3780
+    },
     "perImage": {
       "1K": 0.0336,
       "2K": 0.0504,
-      "4K": 0.0756
+      "4K": 0.1134
     },
-    "source": "Third-party reports of Gemini API standard pricing (output images billed at $30 per 1M output tokens; ~1,120 tokens at 1K, ~1,680 at 2K). The official pricing page could not be reached from the build environment, so these are estimates. Actual cost is recorded from usageMetadata after each generation.",
-    "verified": false
+    "approximateMegapixels": {
+      "1K": 1,
+      "2K": 4,
+      "4K": 16
+    },
+    "source": "Google Cloud generative AI pricing, Gemini Nano Banana 2.1 (https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing), read 2026-10-15.",
+    "verified": "Matches Google's published Google Cloud price list for this model. The Gemini Developer API pricing page (ai.google.dev), which bills a Gemini API key, was not reachable from the build environment, so that page has not been checked.",
+    "actualCostMethod": "Computed per image from the usageMetadata the API returns: prompt tokens at the input rate, image tokens at the image-output rate, reasoning (thoughts) tokens at the text-output rate."
   },
   "styleGuide": "Photographic style: editorial architectural photography for a printed monograph, as if shot on a medium-format digital camera with a tilt-shift lens. Natural daylight only, soft realistic shadows and gentle falloff, accurate warm-neutral white balance, true-to-life material textures with subtle natural imperfections, restrained and uncluttered styling, perfectly straight vertical lines, realistic architectural proportions and believable construction details. Colour palette of warm limestone, charcoal, natural stone and muted olive-grey. Strictly avoid: people, text, lettering, signage, logos, watermarks, borders or frames, CGI or 3D-render appearance, glossy plastic surfaces, HDR, oversaturation, lens flare, distorted or floating furniture, impossible geometry, inconsistent window and door proportions.",
   "assets": [

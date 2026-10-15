@@ -35,6 +35,8 @@ interface Asset {
   file: string;
   section: string;
   aspectRatio: ImageAspectRatio;
+  /** Set by `pnpm assets:import` when a supplied file differs from the specified ratio. */
+  requestedAspectRatio?: ImageAspectRatio;
   imageSize: ImageSize;
   batch: number;
   prompt: string;
@@ -44,6 +46,7 @@ interface Asset {
   height?: number;
   blurDataURL?: string;
   generation?: Record<string, unknown>;
+  source?: Record<string, unknown>;
   error?: string;
 }
 
@@ -134,15 +137,19 @@ async function generate(assets: Asset[], manifest: Manifest, force: boolean): Pr
   let spent = 0;
   for (const asset of queue) {
     const prompt = composePrompt(asset, manifest.styleGuide);
-    process.stdout.write(`→ ${asset.id} (${asset.aspectRatio}, ${asset.imageSize}) … `);
+    const aspectRatio = asset.requestedAspectRatio ?? asset.aspectRatio;
+    process.stdout.write(`→ ${asset.id} (${aspectRatio}, ${asset.imageSize}) … `);
     const started = Date.now();
     try {
-      const result = await generateImage({ prompt, aspectRatio: asset.aspectRatio, imageSize: asset.imageSize }, model);
+      const result = await generateImage({ prompt, aspectRatio, imageSize: asset.imageSize }, model);
       const processed = await processImage(asset, result.data, result.mimeType);
       const cost = costFromUsage(result.usage);
       spent += cost;
       Object.assign(asset, processed, {
         status: "generated",
+        aspectRatio,
+        requestedAspectRatio: undefined,
+        source: undefined,
         error: undefined,
         generation: {
           model: result.model,

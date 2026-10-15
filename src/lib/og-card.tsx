@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { cacheLife } from "next/cache";
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import { getAsset, isAvailable } from "@/content/assets";
 
 export const ogSize = { width: 1200, height: 630 };
@@ -21,12 +23,23 @@ const fonts = [
   },
 ];
 
-/** Embeds a generated photograph, or returns null while it is still pending. */
-function photoDataUrl(assetId: string): string | null {
+const PHOTO = { width: 560, height: 630 };
+
+/**
+ * Embeds the photograph as a crop sized for the card (tens of KB) rather
+ * than the multi-megabyte original, or returns null while it is pending.
+ * Cached so the card stays a static, build-time asset.
+ */
+async function photoDataUrl(assetId: string): Promise<string | null> {
+  "use cache";
+  cacheLife("max"); // Source files only change with a deploy.
   const asset = getAsset(assetId);
   if (!isAvailable(asset)) return null;
-  const bytes = readFileSync(join(process.cwd(), "public", asset.file));
-  return `data:image/jpeg;base64,${bytes.toString("base64")}`;
+  const crop = await sharp(join(process.cwd(), "public", asset.file))
+    .resize(PHOTO.width, PHOTO.height, { fit: "cover", position: "centre" })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toBuffer();
+  return `data:image/jpeg;base64,${crop.toString("base64")}`;
 }
 
 interface OgCardProps {
@@ -37,8 +50,8 @@ interface OgCardProps {
 }
 
 /** Shared social card: brand typography on limestone, photograph to the right. */
-export function renderOgCard({ eyebrow, title, footnote, assetId }: OgCardProps) {
-  const photo = photoDataUrl(assetId);
+export async function renderOgCard({ eyebrow, title, footnote, assetId }: OgCardProps) {
+  const photo = await photoDataUrl(assetId);
 
   return new ImageResponse(
     (
@@ -74,7 +87,7 @@ export function renderOgCard({ eyebrow, title, footnote, assetId }: OgCardProps)
         </div>
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element -- rendered by ImageResponse, not the DOM
-          <img src={photo} alt="" width={560} height={630} style={{ objectFit: "cover" }} />
+          <img src={photo} alt="" width={PHOTO.width} height={PHOTO.height} style={{ objectFit: "cover" }} />
         ) : (
           <div style={{ display: "flex", width: 560, height: 630, background: "#252722", position: "relative" }}>
             <div style={{ position: "absolute", left: 200, top: 150, width: 2, height: 330, background: "#f3f0e9" }} />

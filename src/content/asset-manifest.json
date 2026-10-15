@@ -47,9 +47,17 @@
       "imageSize": "2K",
       "batch": 1,
       "prompt": "A wide view across the inner courtyard of a contemporary single-storey house built from pale honed limestone. Low, thick stone walls enclose a calm square court with a shallow rectangular reflecting pool and a single mature olive tree growing from a bed of pale gravel. On the far side a deep, thin flat roof overhang shelters a loggia with floor-to-ceiling glazing set in slim oiled-oak frames. Late-afternoon sun rakes across the stone and casts long, soft shadows; the sky is clear and pale. Camera at standing eye height, centred and symmetrical composition, generous quiet space above the walls.",
-      "status": "failed",
+      "status": "generated",
       "estimatedCostUsd": 0.0504,
-      "error": "quota: Gemini API 429 — free-tier quota for gemini-nano-banana-2.1 is 0; the API key's project needs billing (paid tier). No image produced, no charge. (2026-10-15)"
+      "width": 2752,
+      "height": 1536,
+      "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAkAAwBSJYwCdAENqgd2iAD+8/DGHTmywHq1UA9q3SLYx8/GwiO4NGD93vYcwL9r8un/RCgLYAAA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:46.542Z",
+        "bytes": 2750855,
+        "sha256": "9a5b4217fce545b0"
+      }
     },
     {
       "id": "material-limestone",
@@ -61,9 +69,17 @@
       "imageSize": "1K",
       "batch": 1,
       "prompt": "Close-up of a honed pale limestone wall built in long, low courses with fine joints, meeting a limestone floor at a crisp recessed shadow gap. Warm low sunlight grazes the surface from the side, revealing natural fossil texture and subtle variations of colour. Abstract, calm composition with the courses running horizontally.",
-      "status": "failed",
+      "status": "generated",
       "estimatedCostUsd": 0.0336,
-      "error": "quota: Gemini API 429 — free-tier quota for gemini-nano-banana-2.1 is 0; the API key's project needs billing (paid tier). No image produced, no charge. (2026-10-15)"
+      "width": 2048,
+      "height": 2048,
+      "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACQAQCdASoQABAAAwBSJQBOgBEJArAA/vIpbntlndiL9VZdUerdzmR+v3uUBiP46wAAAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:46.787Z",
+        "bytes": 3276392,
+        "sha256": "ea0aa0e792ea3344"
+      }
     },
     {
       "id": "studio-plaster-model",
@@ -75,8 +91,17 @@
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A carefully made white plaster architectural massing model of a low courtyard house resting on a long oiled-oak worktable in a quiet design studio. Soft north light from a tall window at the left falls across the model, revealing its walls and openings through delicate shadows. Behind it, slightly out of focus, a warm lime-plastered wall and a few rolled sheets of plain blank paper. Close, low three-quarter view with shallow depth of field.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABUAPt1cpkyopSOiMAgBEBuJQBOmUABeGywWGklaJmIAAP7KcX/uJ6Y8O8In8LML7zQh7Yn5wJRXaN+MHFPBc4lrvtabKHIVi6SaLBOyrqk+3Uz99VxmmFIFihe+LBFuRg3NgAA=",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:47.040Z",
+        "bytes": 2593033,
+        "sha256": "76488575e906d1c6"
+      }
     },
     {
       "id": "material-oak",
@@ -88,8 +113,17 @@
       "imageSize": "1K",
       "batch": 2,
       "prompt": "Close-up detail of oiled rift-sawn oak joinery: a flush cabinet door with a precise recessed finger pull and a slim, even shadow gap to the adjacent panel. Straight, even grain and a matte finish, softly lit from the side by a nearby window.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0336
+      "status": "generated",
+      "estimatedCostUsd": 0.0336,
+      "width": 2048,
+      "height": 2048,
+      "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQABAAAwBSJZACdAEKh6Lp260AAPiN8d56h2ZY0yMW716EVgHXYIoVbDzQ8F9dDIfqAoVVneAAAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:47.297Z",
+        "bytes": 3080208,
+        "sha256": "5d7c58fffe68abf3"
+      }
     },
     {
       "id": "material-lime-plaster",
@@ -101,8 +135,17 @@
       "imageSize": "1K",
       "batch": 2,
       "prompt": "A softly curved interior wall finished in warm off-white lime plaster with a gentle hand-trowelled texture. Daylight from an unseen window washes across it, creating a smooth gradient from light into shadow around the curve. Minimal, abstract composition.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0336
+      "status": "generated",
+      "estimatedCostUsd": 0.0336,
+      "width": 2048,
+      "height": 2048,
+      "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAAAQAgCdASoQABAAAwBSJQBOgCPpQMdscWgAAP6RfQYC/bsvHaj6lNusrCBQ8swbquowBF/gCAsAAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:47.552Z",
+        "bytes": 2746623,
+        "sha256": "714bc3e1fbb1f68e"
+      }
     },
     {
       "id": "material-board-concrete",
@@ -114,8 +157,17 @@
       "imageSize": "1K",
       "batch": 2,
       "prompt": "Close-up of a board-formed concrete wall with the clear imprint of horizontal timber boards, small tie holes in a regular grid and soft daylight grazing across it from above. Neutral grey with warm undertones, matte and finely detailed.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0336
+      "status": "generated",
+      "estimatedCostUsd": 0.0336,
+      "width": 2048,
+      "height": 2048,
+      "blurDataURL": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADwAQCdASoQABAAAwBSJZQCdADtCjqAV1QA9yao6/VUNGRd0+/GgAAA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:47.864Z",
+        "bytes": 3609493,
+        "sha256": "73483221dbc910ef"
+      }
     },
     {
       "id": "courtyard-house-hero",
@@ -123,12 +175,22 @@
       "section": "Courtyard House hero; project cards",
       "purpose": "Project hero and card image: the house in its landscape.",
       "alt": "The Courtyard House in a dry landscape of grasses and olive trees: long, low limestone walls beneath a thin flat roof with a deep overhang.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "Exterior of a contemporary single-storey courtyard house in a dry, gently sloping Mediterranean landscape of wild grasses, rosemary and a few olive trees. Long horizontal walls of pale honed limestone with only a few deep-set openings, a thin flat roof with a generous overhang and a recessed entrance door in oiled oak. Clear morning light, soft shadows, pale blue sky. Low eye-level two-point perspective with straight verticals, the house stretching across the frame.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAwAAwBSJZgCdAEO7WTTiGoA/u2VfqpBik7zsMjsFfeZLv0hycnRasQvFOzVtqOlssUGNfH1u0eZaw6PVBf0C4rh3ULmddNgyhTMAAA=",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:48.146Z",
+        "bytes": 3663517,
+        "sha256": "93a7782b718e2c04"
+      }
     },
     {
       "id": "courtyard-house-living",
@@ -140,8 +202,17 @@
       "imageSize": "2K",
       "batch": 2,
       "prompt": "Interior of the living room of a limestone courtyard house: pale honed limestone walls, a wide-plank oiled-oak floor, a low linen sofa in a natural tone and a simple oak bench. A large opening framed in slim oak looks onto a sunlit courtyard with an olive tree. Deep window reveals and a smooth lime-plaster ceiling. Afternoon light enters from the side and casts a long, soft shadow across the floor. Calm and uncluttered.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAABwAwCdASoQABUAPt1apkyopSOiMAgBEBuJQBOgAY666BPa6WAA2cqbVXHDBDTvSqmewaPornxDL6Aa1GSo3FtCaPoU/PxGHGhYvVLXGEx3UTdh30X5mWKST/DmRfNWl+aiDyvAmK0DHeB3SQAAAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:48.451Z",
+        "bytes": 3025456,
+        "sha256": "68c8e46f44f51226"
+      }
     },
     {
       "id": "atelier-apartment-hero",
@@ -149,12 +220,22 @@
       "section": "Atelier Apartment hero; project cards",
       "purpose": "Project hero and card image.",
       "alt": "A long living space in the Atelier Apartment: lime-plaster walls, a wide oak floor, tall windows with oak seats and a full-height oak joinery wall.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "Interior of a renovated top-floor apartment in a 1930s city building: a long, calm living space with warm white lime-plaster walls, a wide-board oiled-oak floor and tall original windows set in deep walls with built-in oak window seats. Along one side runs a continuous floor-to-ceiling oak joinery wall with flush doors. A slender blackened-steel glazed screen divides the space. Minimal furniture: a low linen sofa, a round oak table and a single ceramic vase. Soft morning daylight.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAwAAwBSJZACdAYsZq252QsAAP7Q77GdJ056iX1qSWf6kWwQgJVOyFWVhQjT6Kp7hqI3eFfrsI+BT4VlJ1YTd7VKIuCjGhp63LV8g+kvYAAA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:48.722Z",
+        "bytes": 2850643,
+        "sha256": "58c3d19db7e32e03"
+      }
     },
     {
       "id": "atelier-apartment-kitchen",
@@ -166,8 +247,17 @@
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A kitchen built into a floor-to-ceiling wall of oiled rift-sawn oak joinery in a renovated apartment. A thick honed pale stone worktop with an integrated sink and a slim brushed-steel tap, and a single stone shelf holding a few handmade ceramic bowls. Warm white lime-plaster wall and ceiling. Daylight from a tall window at the right. Straight-on composition, calm and precise.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoQABUAPt1cpkyopSOiMAgBEBuJQBOgBDrWDmZAP/9YdSAA/ZyrC8daH5VA/o/BIcmNVC5lB7y6lNTnIum05/Ml0MOAYmr7Ss8hD97lokgJuw5XH1XKWnzYKkPlh2TnwM2IJnQfG/OVN0B3yQAAAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:48.975Z",
+        "bytes": 2643481,
+        "sha256": "5c66434feb456f78"
+      }
     },
     {
       "id": "atelier-apartment-passage",
@@ -179,8 +269,17 @@
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A softly curved lime-plaster wall guiding a quiet passage towards the bedrooms of a renovated apartment. A shallow recessed niche in the wall holds a single stoneware vessel. Oiled oak floor, a tall oak door standing slightly open, daylight from a window just out of frame creating gentle gradients of light along the curve.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoQABUAPt1cpkyopSOiMAgBEBuJQBOgA8NI4xEeNs/TNx5wAPsR3zv9QQSfQ/OweVyIPd60PmVYZ1OuOpJwnXU5Q0nNi+T9XW0i/p5ILjNQN2yKFEluo3YDQENi2lYXLY7e8INFVfL7TAAA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:49.221Z",
+        "bytes": 2697934,
+        "sha256": "6d130433916efb33"
+      }
     },
     {
       "id": "hotel-calcare-hero",
@@ -188,25 +287,44 @@
       "section": "Hotel Calcare hero; project cards",
       "purpose": "Project hero and card image.",
       "alt": "The lounge of Hotel Calcare inside a restored stone workshop: rough limestone walls, chestnut beams, a travertine fireplace and low linen sofas.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "The lounge of a small boutique hotel inside a restored nineteenth-century stone workshop: thick, roughly dressed limestone walls, a high ceiling with exposed chestnut timber beams, a monolithic travertine fireplace, low linen sofas and oak lounge chairs on a honed travertine floor. Tall arched openings with slim steel-framed glazing look out onto a garden. Warm late-morning daylight, quiet and refined, no people.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQAgCdASoQAAwAAwBSJZACdAEPVnn8mAgAAP7c/kFZMKI06/OK3mEKX4mbFkcNNOsEL+Urh4yGj+bWze0/mF7BaMNfKL4is59Sf9PBKrKsIcpn6sMTQCTHeu9szwbI1y5TzUmEAAA=",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:49.497Z",
+        "bytes": 3533834,
+        "sha256": "c70797ffd718ecf6"
+      }
     },
     {
       "id": "hotel-calcare-room",
       "file": "/images/projects/hotel-calcare/hotel-calcare-room.jpg",
       "section": "Hotel Calcare gallery",
       "purpose": "Guest room interior.",
-      "alt": "A guest room at Hotel Calcare with limewashed walls, a low oak bed in natural linen and a travertine bench beneath a deep stone window.",
+      "alt": "A guest room at Hotel Calcare: limewashed stone walls, a low oak bed in natural linen with a travertine bench at its foot, and a deep window hung with linen curtains.",
       "aspectRatio": "3:4",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A guest room in a boutique hotel within an old stone building: limewashed walls, a low oak bed with natural linen bedding, a travertine bench at the foot of the bed, a deep window set into a thick stone wall with simple linen curtains, and wide oak floorboards. Soft afternoon light and a calm atmosphere.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAABwBACdASoQABUAPt1cpkyopSOiMAgBEBuJYwCdMoAC8hwKQq/tQHS3FZ3UAAD4oBj2QRu9yJ/wYo5e/+xLzwCyGVHDc9d8k+pRU9hS43fDANbVcfjFyks3svmmscX7gCmij21ddGSnMVRXShhnPjMTSrV8bSyBIopA1SgA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:49.756Z",
+        "bytes": 2956175,
+        "sha256": "b543c5389361bc56"
+      }
     },
     {
       "id": "hotel-calcare-bath",
@@ -214,12 +332,22 @@
       "section": "Hotel Calcare gallery",
       "purpose": "Bathing space detail in travertine.",
       "alt": "A bathroom lined in honed travertine with a monolithic stone basin and a small deep-set window admitting soft daylight.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A hotel bathroom finished entirely in honed travertine: a monolithic travertine washbasin carved from a single block, a slim brushed-bronze wall-mounted tap, a small window with a deep reveal admitting soft daylight, and a natural linen towel on a simple oak rail. Serene, tactile and precise.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAQCdASoQAAwAAwBSJYgCdADwy8FzHgAA/j+JbFAbOCoIcNKGM+H8x9vtI1LWpBVQd5vKvm+DpoJWD3Xz5ewPb2M7TraRCWujn31Udjd8qyH1gAA=",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:50.075Z",
+        "bytes": 3197874,
+        "sha256": "85738c7188fcca39"
+      }
     },
     {
       "id": "reading-pavilion-hero",
@@ -227,25 +355,44 @@
       "section": "Reading Pavilion hero; project cards",
       "purpose": "Project hero and card image.",
       "alt": "The Reading Pavilion at the edge of a garden: a low board-formed concrete volume with a long larch-framed window beneath a thin roof.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A small public reading pavilion at the edge of a landscaped garden: a low, elongated board-formed concrete structure with a thin flat roof and one long horizontal window of clear glass framed in larch timber, with a larch-clad soffit visible under the roof overhang. Mature trees and meadow planting around it and a gravel path leading to the entrance. Soft, bright afternoon light, straight verticals, eye-level view.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQAgCdASoQAAwAAwBSJaACdAEKBEvAlpkAAPw+kyInIYylsXRCK51iiV3/BzXD9I7flMuKoCFvg89nlW5rZ/9g/zzmXWMrNjA7Hp2rpyZkfOO6O//U7yZgoIxL/aBp+ujNEEXmcYngAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:50.380Z",
+        "bytes": 4343234,
+        "sha256": "10301f18786f4c92"
+      }
     },
     {
       "id": "reading-pavilion-interior",
       "file": "/images/projects/reading-pavilion/reading-pavilion-interior.jpg",
       "section": "Reading Pavilion gallery",
       "purpose": "Interior reading room.",
-      "alt": "Inside the Reading Pavilion: board-formed concrete walls, a long oak reading table and a low window framing the garden beneath a clerestory.",
+      "alt": "Inside the Reading Pavilion: board-formed concrete walls, a long oak reading table with oak chairs, built-in oak bookshelves and a tall window to the garden, with daylight washing down from a high clerestory.",
       "aspectRatio": "3:4",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "Interior of a small public reading pavilion: board-formed concrete walls, a long solid oak reading table with simple oak chairs, built-in oak shelves holding books in plain linen bindings with no visible titles, and a long low window framing a garden. A high clerestory slot lets daylight wash down the concrete wall. Calm, quiet and empty of people.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 1792,
+      "height": 2400,
+      "blurDataURL": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAAAwBACdASoQABUAPt1cpkyopSOiMAgBEBuJYgCdMoAB99KjL2F264sCLgAA/uM4JoopTl9cjRE7Nyyb4t5fq6NgcRflbzkJlZqo+mZsdka4YFrV/s8W+ESlMIn/bp/iCA6ES9+oXYZ9eEMeq7J/u8l31Xwou0n4dnVgQEMaZN4ON0KfiItgAA==",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:50.670Z",
+        "bytes": 3064662,
+        "sha256": "61fb2fecee2d6a5c"
+      }
     },
     {
       "id": "reading-pavilion-dusk",
@@ -253,12 +400,22 @@
       "section": "Reading Pavilion gallery",
       "purpose": "Atmospheric view at dusk.",
       "alt": "The Reading Pavilion at dusk seen across tall meadow grasses, its long window glowing warmly beneath a deep blue sky.",
-      "aspectRatio": "3:2",
+      "aspectRatio": "4:3",
       "imageSize": "2K",
       "batch": 2,
       "prompt": "A small reading pavilion seen at dusk across a meadow of tall grasses: a low board-formed concrete volume with a warm glow from its long horizontal window, a larch soffit catching the last light and a few mature trees in silhouette against a deep blue evening sky. Calm, atmospheric, realistic low-light photography.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "generated",
+      "estimatedCostUsd": 0.0504,
+      "width": 2400,
+      "height": 1792,
+      "requestedAspectRatio": "3:2",
+      "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAQCdASoQAAwAAwBSJQBOgCDmDUfQlQAA/tK1oC4ojVavrXug0v8ivAWGShYzb0DcKMVl5Xlczu4Ofx1c/7ry+s+a2a15AseQghxrAf6y54EurTpelWIu+HIEMAAA",
+      "source": {
+        "method": "manual-upload",
+        "importedAt": "2026-10-15T18:42:50.958Z",
+        "bytes": 4178364,
+        "sha256": "2459534af7b3cccb"
+      }
     }
   ],
   "video": {

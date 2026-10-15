@@ -24,8 +24,11 @@ const MANIFEST_PATH = join(ROOT, "src/content/asset-manifest.json");
 const ORIGINALS_DIR = join(ROOT, ".generated-originals");
 const LOCK_PATH = join(ROOT, ".asset-generation.lock");
 const MAX_PER_RUN = 20;
-/** USD per 1M tokens, from the manifest's (unverified) pricing notes. Thinking tokens are priced at the image rate as an upper bound. */
-const PRICE_PER_M = { input: 1.5, output: 30 };
+/**
+ * USD per 1M tokens for gemini-nano-banana-2.1, Standard tier (Google Cloud
+ * price list, read 2026-10-15; see the manifest's `pricing` block).
+ */
+const PRICE_PER_M = { input: 1.5, imageOutput: 30, reasoningOutput: 7.5 };
 
 interface Asset {
   id: string;
@@ -65,10 +68,13 @@ function composePrompt(asset: Asset, styleGuide: string): string {
   return `${asset.prompt}\n\n${styleGuide}`;
 }
 
-function estimateCost(usage: TokenUsage): number {
-  const output = (usage.outputTokens ?? 0) + (usage.thoughtsTokens ?? 0);
-  const cost = ((usage.promptTokens ?? 0) * PRICE_PER_M.input + output * PRICE_PER_M.output) / 1_000_000;
-  return Math.round(cost * 10_000) / 10_000;
+/** Cost from the token usage the API reports. Image-only responses put image tokens in outputTokens. */
+function costFromUsage(usage: TokenUsage): number {
+  const cost =
+    (usage.promptTokens ?? 0) * PRICE_PER_M.input +
+    (usage.outputTokens ?? 0) * PRICE_PER_M.imageOutput +
+    (usage.thoughtsTokens ?? 0) * PRICE_PER_M.reasoningOutput;
+  return Math.round((cost / 1_000_000) * 1_000_000) / 1_000_000;
 }
 
 function select(manifest: Manifest, ids: string | undefined, batch: string | undefined): Asset[] {
@@ -97,7 +103,7 @@ function printPlan(assets: Asset[], manifest: Manifest): void {
     );
   }
   const total = pending.reduce((sum, asset) => sum + asset.estimatedCostUsd, 0);
-  console.log(`\n${pending.length} to generate · estimated $${total.toFixed(2)} (estimate; see manifest pricing notes)`);
+  console.log(`\n${pending.length} to generate · estimated $${total.toFixed(4)} for image output, plus input and any reasoning tokens (see manifest pricing)`);
   if (process.argv.includes("--prompts")) {
     for (const asset of pending) console.log(`\n— ${asset.id}\n${composePrompt(asset, manifest.styleGuide)}`);
   }
@@ -133,7 +139,7 @@ async function generate(assets: Asset[], manifest: Manifest, force: boolean): Pr
     try {
       const result = await generateImage({ prompt, aspectRatio: asset.aspectRatio, imageSize: asset.imageSize }, model);
       const processed = await processImage(asset, result.data, result.mimeType);
-      const cost = estimateCost(result.usage);
+      const cost = costFromUsage(result.usage);
       spent += cost;
       Object.assign(asset, processed, {
         status: "generated",
@@ -144,22 +150,27 @@ async function generate(assets: Asset[], manifest: Manifest, force: boolean): Pr
           promptSent: prompt,
           sourceMimeType: result.mimeType,
           usage: result.usage,
-          estimatedCostUsd: cost,
+          costUsdFromUsage: cost,
         },
       });
-      console.log(`done in ${Math.round((Date.now() - started) / 1000)}s · ${processed.width}×${processed.height} · ~$${cost.toFixed(4)}`);
+      const tokens = `in ${result.usage.promptTokens ?? "?"} / image ${result.usage.outputTokens ?? "?"} / reasoning ${result.usage.thoughtsTokens ?? 0}`;
+      console.log(`done in ${Math.round((Date.now() - started) / 1000)}s · ${processed.width}×${processed.height} · tokens ${tokens} · $${cost.toFixed(6)}`);
     } catch (error) {
       const message = error instanceof GenerationError ? `${error.code}: ${error.message}` : redact(String(error));
-      Object.assign(asset, { status: "failed", error: message });
+      // Keep the manifest readable: the first line of the provider message is enough to act on.
+      const summary = message.split("\n")[0].slice(0, 300);
+      Object.assign(asset, { status: "failed", error: `${summary} (${new Date().toISOString()})` });
       console.log(`failed — ${message}`);
-      if (error instanceof GenerationError && (error.code === "missing-credentials" || error.code === "invalid-model")) {
+      const fatal = ["missing-credentials", "invalid-model", "quota"];
+      if (error instanceof GenerationError && fatal.includes(error.code)) {
         writeManifest(manifest);
-        throw error; // Configuration problems will fail every request; stop instead of repeating them.
+        // Account or configuration problems fail every request; stop instead of repeating them.
+        throw new GenerationError(error.code, `Stopped after ${asset.id}: ${summary}`, error.status);
       }
     }
     writeManifest(manifest);
   }
-  console.log(`\nEstimated spend this run: ~$${spent.toFixed(4)} (from reported token usage).`);
+  console.log(`\nCost this run from reported token usage: $${spent.toFixed(6)} (Standard-tier list prices).`);
 }
 
 async function main(): Promise<void> {

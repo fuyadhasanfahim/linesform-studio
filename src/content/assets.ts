@@ -8,8 +8,10 @@ export interface AssetGeneration {
   model: string;
   generatedAt: string;
   promptSent: string;
-  outputTokens?: number;
-  estimatedCostUsd?: number;
+  sourceMimeType?: string;
+  usage?: { promptTokens?: number; outputTokens?: number; thoughtsTokens?: number; totalTokens?: number };
+  /** Computed from the API's reported token usage at Standard-tier list prices. */
+  costUsdFromUsage?: number;
 }
 
 export interface AssetRecord {

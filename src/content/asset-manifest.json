@@ -14,7 +14,7 @@
     "perMillionTokens": {
       "input": 1.5,
       "textAndReasoningOutput": 7.5,
-      "imageOutput": 30.0
+      "imageOutput": 30
     },
     "outputTokensPerImage": {
       "1K": 1120,
@@ -47,8 +47,9 @@
       "imageSize": "2K",
       "batch": 1,
       "prompt": "A wide view across the inner courtyard of a contemporary single-storey house built from pale honed limestone. Low, thick stone walls enclose a calm square court with a shallow rectangular reflecting pool and a single mature olive tree growing from a bed of pale gravel. On the far side a deep, thin flat roof overhang shelters a loggia with floor-to-ceiling glazing set in slim oiled-oak frames. Late-afternoon sun rakes across the stone and casts long, soft shadows; the sky is clear and pale. Camera at standing eye height, centred and symmetrical composition, generous quiet space above the walls.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0504
+      "status": "failed",
+      "estimatedCostUsd": 0.0504,
+      "error": "quota: Gemini API 429 — free-tier quota for gemini-nano-banana-2.1 is 0; the API key's project needs billing (paid tier). No image produced, no charge. (2026-10-15)"
     },
     {
       "id": "material-limestone",
@@ -60,8 +61,9 @@
       "imageSize": "1K",
       "batch": 1,
       "prompt": "Close-up of a honed pale limestone wall built in long, low courses with fine joints, meeting a limestone floor at a crisp recessed shadow gap. Warm low sunlight grazes the surface from the side, revealing natural fossil texture and subtle variations of colour. Abstract, calm composition with the courses running horizontally.",
-      "status": "planned",
-      "estimatedCostUsd": 0.0336
+      "status": "failed",
+      "estimatedCostUsd": 0.0336,
+      "error": "quota: Gemini API 429 — free-tier quota for gemini-nano-banana-2.1 is 0; the API key's project needs billing (paid tier). No image produced, no charge. (2026-10-15)"
     },
     {
       "id": "studio-plaster-model",

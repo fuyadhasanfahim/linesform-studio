@@ -60,6 +60,7 @@ export type GenerationErrorCode =
   | "invalid-model"
   | "invalid-request"
   | "provider-error"
+  | "quota"
   | "timeout"
   | "blocked"
   | "no-output";

@@ -67,7 +67,14 @@ export async function geminiRequest<T>(path: string, { method = "GET", body, tim
     } catch {
       // Non-JSON error body; keep the raw (redacted) text.
     }
-    const code = response.status === 404 ? "invalid-model" : response.status === 400 ? "invalid-request" : "provider-error";
+    const code =
+      response.status === 404
+        ? "invalid-model"
+        : response.status === 400
+          ? "invalid-request"
+          : response.status === 429
+            ? "quota"
+            : "provider-error";
     throw new GenerationError(code, `Gemini API ${response.status}: ${redact(message)}`, response.status);
   }
   return JSON.parse(text) as T;

@@ -157,11 +157,15 @@ async function generate(assets: Asset[], manifest: Manifest, force: boolean): Pr
       console.log(`done in ${Math.round((Date.now() - started) / 1000)}s · ${processed.width}×${processed.height} · tokens ${tokens} · $${cost.toFixed(6)}`);
     } catch (error) {
       const message = error instanceof GenerationError ? `${error.code}: ${error.message}` : redact(String(error));
-      Object.assign(asset, { status: "failed", error: message });
+      // Keep the manifest readable: the first line of the provider message is enough to act on.
+      const summary = message.split("\n")[0].slice(0, 300);
+      Object.assign(asset, { status: "failed", error: `${summary} (${new Date().toISOString()})` });
       console.log(`failed — ${message}`);
-      if (error instanceof GenerationError && (error.code === "missing-credentials" || error.code === "invalid-model")) {
+      const fatal = ["missing-credentials", "invalid-model", "quota"];
+      if (error instanceof GenerationError && fatal.includes(error.code)) {
         writeManifest(manifest);
-        throw error; // Configuration problems will fail every request; stop instead of repeating them.
+        // Account or configuration problems fail every request; stop instead of repeating them.
+        throw new GenerationError(error.code, `Stopped after ${asset.id}: ${summary}`, error.status);
       }
     }
     writeManifest(manifest);

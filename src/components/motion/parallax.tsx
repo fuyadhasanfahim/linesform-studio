@@ -4,7 +4,8 @@ import { useScroll, useTransform } from "motion/react";
 import * as m from "motion/react-m";
 import { useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { RICH_MOTION_QUERY, useMediaQuery } from "@/lib/use-media-query";
+import { RICH_MOTION_QUERY } from "@/lib/media-queries";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 interface ParallaxProps {
   children: ReactNode;

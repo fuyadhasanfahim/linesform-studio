@@ -12,8 +12,13 @@ interface AssetImageProps {
    * ratio. Use "fill" when the parent sets a (responsive) size.
    */
   aspect?: string;
-  /** Preload in <head>. Use only for the LCP image of a page. */
+  /** Preload in <head> at high fetch priority. Use only for the LCP image of a page. */
   preload?: boolean;
+  /**
+   * Load at once at high fetch priority, without a <head> preload. For an
+   * LCP image that some layouts hide, where a preload would always download it.
+   */
+  eager?: boolean;
   /** Empty alt text, for images inside links whose text already names the target. */
   decorative?: boolean;
   className?: string;
@@ -29,6 +34,7 @@ export function AssetImage({
   sizes,
   aspect,
   preload = false,
+  eager = false,
   decorative = false,
   className,
   imageClassName,
@@ -48,6 +54,9 @@ export function AssetImage({
           fill
           sizes={sizes}
           preload={preload}
+          loading={eager ? "eager" : undefined}
+          // `preload` alone sends the <link> and <img> at default image priority.
+          fetchPriority={preload || eager ? "high" : undefined}
           quality={80}
           placeholder={asset.blurDataURL ? "blur" : "empty"}
           blurDataURL={asset.blurDataURL}

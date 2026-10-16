@@ -21,6 +21,7 @@ import {
   BUDGETS,
   FIELD_ORDER,
   LIMITS,
+  PROJECT_TYPE_PARAM,
   PROJECT_TYPES,
   readEnquiry,
   validateEnquiry,
@@ -107,6 +108,34 @@ export function EnquiryForm() {
     }
   }, [state.attempt, state.status, state.errors]);
 
+  // Funnel signals (sent only after consent, never with field values):
+  // the form was seen, and a visitor began to fill it in. Once each per page view.
+  const viewed = useRef(false);
+  const started = useRef(false);
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form || viewed.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (viewed.current || !entries.some((entry) => entry.isIntersecting)) return;
+        viewed.current = true;
+        observer.disconnect();
+        track("enquiry_form_view", { form: "project_enquiry" });
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(form);
+    return () => observer.disconnect();
+  }, []);
+
+  function handleFocus(event: FocusEvent<HTMLFormElement>) {
+    if (started.current) return;
+    const target = event.target;
+    if (!(target instanceof HTMLElement) || !target.matches("input:not([tabindex='-1']), textarea, [data-field]")) return;
+    started.current = true;
+    track("enquiry_form_start", { form: "project_enquiry" });
+  }
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     const found = validateEnquiry(readEnquiry(new FormData(event.currentTarget)));
     if (Object.keys(found).length > 0) {
@@ -158,6 +187,7 @@ export function EnquiryForm() {
       aria-label="Project enquiry"
       action={formAction}
       onSubmit={handleSubmit}
+      onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleChange}
       noValidate
@@ -217,6 +247,7 @@ export function EnquiryForm() {
           placeholder="Choose one"
           required
           defaultValue={values?.projectType ?? ""}
+          presetParam={PROJECT_TYPE_PARAM}
           invalid={Boolean(errors.projectType)}
           describedBy={describe("projectType")}
           controlClassName={controlClass}

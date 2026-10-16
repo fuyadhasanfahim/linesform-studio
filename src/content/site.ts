@@ -60,8 +60,9 @@ export const site = {
     { label: "Selected work", href: "/work" },
     { label: "Studio", href: "/#studio" },
     { label: "Approach", href: "/#approach" },
-    { label: "Contact", href: "/#contact" },
   ] satisfies NavItem[],
+  /** The one conversion action. The same label is used everywhere it appears. */
+  primaryCta: { label: "Start a project", href: "/#contact" } satisfies NavItem,
   footer: [
     {
       heading: "Studio",
@@ -69,13 +70,12 @@ export const site = {
         { label: "Selected work", href: "/work" },
         { label: "Studio", href: "/#studio" },
         { label: "Approach", href: "/#approach" },
-        { label: "Contact", href: "/#contact" },
       ],
     },
     {
       heading: "Enquiries",
       links: [
-        { label: "Project enquiry", href: "/#enquiry" },
+        { label: "Start a project", href: "/#contact" },
         { label: "Privacy policy", href: "/privacy" },
         { label: "Cookie policy", href: "/cookies" },
         { label: "Terms & conditions", href: "/terms" },

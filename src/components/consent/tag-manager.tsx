@@ -26,7 +26,7 @@ export function TagManager({ gtmId }: { gtmId: string }) {
       <ConsentSignals choice={choice} />
       <GoogleTagManager gtmId={gtmId} />
       <PageViews />
-      <ContactClicks />
+      <LinkClicks />
     </>
   );
 }
@@ -48,13 +48,19 @@ function PageViews() {
   return null;
 }
 
-function ContactClicks() {
+/**
+ * One delegated listener for every tracked link. Calls to action carry
+ * data-cta-id / data-cta-location (see tracking/cta.ts); a link is counted
+ * once, under the first rule it matches.
+ */
+function LinkClicks() {
   useEffect(() => {
     function onClick(event: MouseEvent) {
       const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
-      const href = link?.getAttribute("href") ?? "";
-      if (href.startsWith("mailto:")) track("contact_click", { link_type: "email" });
-      else if (/#(contact|enquiry)$/.test(href)) track("contact_click", { link_type: "enquiry_form" });
+      if (!(link instanceof HTMLElement)) return;
+      const { ctaId, ctaLocation } = link.dataset;
+      if (ctaId) track("cta_click", { cta_id: ctaId, cta_location: ctaLocation ?? "unknown" });
+      else if (link.getAttribute("href")?.startsWith("mailto:")) track("contact_click", { link_type: "email" });
     }
     document.addEventListener("click", onClick, { capture: true });
     return () => document.removeEventListener("click", onClick, { capture: true });

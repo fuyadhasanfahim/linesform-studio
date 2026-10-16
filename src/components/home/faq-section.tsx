@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Accordion } from "@/components/ui/accordion";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
+import { site } from "@/content/site";
 import { faq } from "@/content/studio";
 
 export function FaqSection() {
@@ -14,8 +15,8 @@ export function FaqSection() {
             {faq.heading}
           </h2>
           <p className="mt-6 measure text-olive-ink">{faq.intro}</p>
-          <ArrowLink href="#enquiry" className="mt-8">
-            Go to the enquiry form
+          <ArrowLink href="#contact" className="mt-8" cta={{ id: "start_project", location: "faq" }}>
+            {site.primaryCta.label}
           </ArrowLink>
         </Reveal>
         <div className="col-span-12 lg:col-span-7 lg:col-start-6">

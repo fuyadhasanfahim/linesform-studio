@@ -2,7 +2,7 @@ export const hero = {
   label: "Architecture & Interiors",
   typologies: ["Private houses", "Apartments & interiors", "Hospitality", "Cultural pavilions"],
   statement:
-    "We design houses, interiors and small public buildings that are quiet in form, exact in detail and generous to the people who use them.",
+    "New houses, apartment renovations, and small hospitality and public interiors. Each begins with how light, climate and daily life move through the site, and ends in calm rooms made from a few lasting materials.",
   figureAsset: "hero-courtyard-dusk",
   figureCaption: "Courtyard House — the inner court in late afternoon. Conceptual project.",
   figureProject: "courtyard-house",
@@ -42,24 +42,46 @@ export const approach = {
   heading: "How a project takes shape.",
   intro:
     "A clear sequence keeps every decision grounded, from the first visit to the site to the last joinery detail.",
+  /** Each step ends in something the client sees and keeps. */
+  sharedLabel: "Shared with you",
+  bridge: "The first step is a conversation about your site.",
   steps: [
     {
       title: "Understand the site",
       body: "We begin by listening — to the brief, to the people it serves and to the site itself. Orientation, views, climate, history and regulation are recorded before any form is proposed.",
+      shared: "A written brief and a record of the site",
     },
     {
       title: "Explore spatial possibilities",
       body: "Through sketches, plans and physical models we test several arrangements of rooms and thresholds, looking for the one that feels inevitable.",
+      shared: "Sketches, plans and models of the options",
     },
     {
       title: "Decide material and light",
       body: "Materials are chosen alongside daylight studies. Stone, timber and finishes are sampled on site and observed in the light they will live in.",
+      shared: "Daylight studies and material samples, seen on site",
     },
     {
       title: "Refine through detail",
       body: "Drawings resolve every junction — where floor meets wall, where door meets frame — so the finished space reads as calm and complete.",
+      shared: "Detailed drawings of every junction",
     },
   ],
+};
+
+/**
+ * The same viewpoint of the Reading Pavilion photographed (as generated
+ * images) in afternoon light and at dusk — the two files align exactly, so
+ * they can be compared directly.
+ */
+export const lightStudy = {
+  label: "Light study",
+  heading: "Daylight is the first material.",
+  body: "The Reading Pavilion's long window sits at seated eye level. By day it frames the meadow for whoever is reading; after dark it turns the room into a lantern at the edge of the garden. One opening, placed with care, does both.",
+  before: { asset: "reading-pavilion-hero", label: "Afternoon" },
+  after: { asset: "reading-pavilion-dusk", label: "Dusk" },
+  project: "reading-pavilion",
+  caption: "Reading Pavilion, conceptual project — the same view in afternoon light and at dusk.",
 };
 
 export const materials = {
@@ -92,9 +114,16 @@ export const materials = {
 };
 
 export const contact = {
-  label: "Contact",
+  label: "Start a project",
   heading: "Tell us about the space you have in mind.",
-  body: "A new house, the renovation of an apartment or an interior for hospitality — every project starts with an open conversation. Share a few details about the site, the timeline and what you hope the space will feel like.",
+  body: "Bring a site, a floor plan or only an idea — the brief does not need to be finished. The first conversation is about the place and what you want from it, and whether the studio's way of working suits the project.",
+  includeHeading: "Useful to include",
+  include: [
+    "Where the site is, and what is there today",
+    "A new building, a renovation or an interior",
+    "Timing and budget, even if approximate",
+    "How you hope the space will feel",
+  ],
   conceptNote:
     "Linesform Studio is a portfolio concept. Enquiries are delivered only when an enquiry service has been connected, and a confirmation is shown only after delivery succeeds.",
 };
@@ -154,6 +183,12 @@ export const faq = {
         "Where the site is and what is there today, what you would like to build or change, an indicative timeline and budget if you have them, and a few words about how you hope the space will feel. Drawings and photographs can follow later.",
     },
     {
+      id: "unfinished-brief",
+      question: "Do I need a finished brief or drawings first?",
+      answer:
+        "No. A site, a floor plan or only an idea is enough to begin. The brief is written together in the first stage of the process, which ends with a written brief and a record of the site.",
+    },
+    {
       id: "first-conversation",
       question: "How does the first conversation work?",
       answer:
@@ -170,6 +205,12 @@ export const faq = {
       question: "What should I know about timelines and budgets?",
       answer:
         "Both depend on the site, the scope and the approvals a project needs, so the studio does not quote standard durations or fees. An indicative budget range in your enquiry — or simply “not yet defined” — helps frame the first conversation honestly.",
+    },
+    {
+      id: "concept",
+      question: "Is Linesform Studio a real practice?",
+      answer:
+        "No. It is a fictional practice created by Midline Seven as a portfolio concept. The projects, sites and images are design studies, and the form says plainly whether an enquiry was delivered — it never reports success unless delivery is confirmed.",
     },
   ],
 };

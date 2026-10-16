@@ -3,6 +3,7 @@ import { Approach } from "@/components/home/approach";
 import { ContactSection } from "@/components/home/contact-section";
 import { FaqSection } from "@/components/home/faq-section";
 import { Hero } from "@/components/home/hero";
+import { LightStudy } from "@/components/home/light-study";
 import { Materials } from "@/components/home/materials";
 import { SelectedWork } from "@/components/home/selected-work";
 import { StudioIntro } from "@/components/home/studio-intro";
@@ -33,9 +34,10 @@ export default function HomePage() {
       />
       <Hero />
       <SelectedWork />
-      <Testimonials />
       <StudioIntro />
+      <LightStudy />
       <Approach />
+      <Testimonials />
       <Materials />
       <FaqSection />
       <ContactSection />

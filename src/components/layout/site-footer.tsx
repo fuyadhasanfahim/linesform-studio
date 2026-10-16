@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CookieSettingsButton } from "@/components/consent/cookie-settings-button";
 import { site } from "@/content/site";
 import { hasOptionalTracking } from "@/lib/tracking/config";
+import { ctaAttributes } from "@/lib/tracking/cta";
 
 async function CurrentYear() {
   "use cache";
@@ -38,7 +39,13 @@ export function SiteFooter() {
                     ) : null}
                     {group.links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} className="link-draw">
+                        <Link
+                          href={link.href}
+                          {...(link.href === site.primaryCta.href
+                            ? ctaAttributes({ id: "start_project", location: "footer" })
+                            : {})}
+                          className="link-draw"
+                        >
                           {link.label}
                         </Link>
                       </li>

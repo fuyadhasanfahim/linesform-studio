@@ -1,3 +1,5 @@
+import type { ProjectType } from "@/lib/enquiry/schema";
+
 export interface ProjectFact {
   label: string;
   value: string;
@@ -16,6 +18,20 @@ export interface MaterialNote {
 export interface SpatialNote {
   title: string;
   body: string;
+}
+
+/**
+ * The case-study frame for a project page. Written only from what each
+ * concept already establishes (site, programme, decisions): no client,
+ * budget, real location or outcome is invented.
+ */
+export interface ProjectStudy {
+  /** The design question the study answers. */
+  question: string;
+  /** Conditions the design had to work within. */
+  constraints: string[];
+  /** The response in one or two sentences; the concept text gives the detail. */
+  response: string;
 }
 
 export interface Project {
@@ -40,6 +56,9 @@ export interface Project {
   spatialNotes: SpatialNote[];
   quote: string;
   closing: string;
+  study: ProjectStudy;
+  /** Pre-selects the enquiry form's project type from this project's call to action. */
+  enquiry: { type: ProjectType; prompt: string };
 }
 
 export const projects: Project[] = [
@@ -105,6 +124,18 @@ export const projects: Project[] = [
     quote: "Every room looks onto shade, water or sky — never onto nothing.",
     closing:
       "The Courtyard House is a study in how a modest footprint, built from the ground it stands on, can offer privacy, comfort and a daily connection to light and season.",
+    study: {
+      question:
+        "How can a single-storey house on a hot, dry slope stay cool and private, yet open to light and sky?",
+      constraints: [
+        "A dry, gently sloping site with strong summer sun",
+        "A modest footprint of about 320 m² (conceptual)",
+        "Privacy from the road without closing the house off",
+      ],
+      response:
+        "Turn the house inward. One continuous limestone wall encloses a planted court and becomes the house: 600 mm walls hold the cool of the night, deep reveals and an overhang filter the summer sun, and every room looks onto shade, water or sky.",
+    },
+    enquiry: { type: "Private residence", prompt: "Planning a house of your own?" },
   },
   {
     slug: "atelier-apartment",
@@ -168,6 +199,17 @@ export const projects: Project[] = [
     quote: "Renovation as subtraction: remove what blocks the light, then add only what is needed.",
     closing:
       "The Atelier Apartment explores how an ordinary city interior can be made generous through a single, well-made piece of architecture rather than many small interventions.",
+    study: {
+      question: "How can a small, divided city apartment feel generous without adding a square metre?",
+      constraints: [
+        "Small, disconnected rooms in a 1930s block",
+        "About 140 m² on an upper floor (conceptual)",
+        "Everyday storage that would otherwise fill every room",
+      ],
+      response:
+        "Renovation as subtraction: remove the partitions that block the light and the long view from street to courtyard, then add one oak joinery spine that holds the kitchen, storage and a desk, so the rooms themselves can stay calm.",
+    },
+    enquiry: { type: "Apartment or interior", prompt: "Renovating an apartment?" },
   },
   {
     slug: "hotel-calcare",
@@ -232,6 +274,18 @@ export const projects: Project[] = [
       "Guests should feel the weight of the old walls and the warmth of the new rooms in the same moment.",
     closing:
       "Hotel Calcare proposes a hospitality interior grounded in repair and restraint, where the history of the building is part of the comfort it offers.",
+    study: {
+      question:
+        "How can a disused stone workshop become a hotel without losing the character that makes it worth keeping?",
+      constraints: [
+        "Thick masonry walls and tall arched openings to keep and repair",
+        "Twelve guest rooms, a lounge and a garden (conceptual programme)",
+        "New work that could one day be removed",
+      ],
+      response:
+        "Keep the heavy shell and build a lighter interior inside it. Chestnut floors and partitions stand slightly apart from the old walls, and regional travertine is used only where water and touch are concentrated.",
+    },
+    enquiry: { type: "Hospitality", prompt: "Planning a hospitality interior?" },
   },
   {
     slug: "reading-pavilion",
@@ -295,6 +349,17 @@ export const projects: Project[] = [
     quote: "A building small enough to be understood at a glance, and quiet enough to stay in for hours.",
     closing:
       "The Reading Pavilion tests how a modest public building, made from very few materials, can give a neighbourhood a room of its own.",
+    study: {
+      question: "What does a public building need when its only purpose is to let people read and look out?",
+      constraints: [
+        "The edge of a public garden, open to anyone who walks in",
+        "One room of about 90 m² (conceptual)",
+        "Daylight for reading, but never direct sun on the table",
+      ],
+      response:
+        "A single board-formed concrete room with one long window at seated eye level and a high clerestory: low side light for reading, indirect light for calm, and a long oak table made for staying.",
+    },
+    enquiry: { type: "Cultural or public", prompt: "Planning a small public building?" },
   },
 ];
 

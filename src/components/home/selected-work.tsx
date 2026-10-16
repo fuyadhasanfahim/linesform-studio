@@ -3,6 +3,7 @@ import { ArrowLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { ProjectCard } from "@/components/work/project-card";
 import { projects } from "@/content/projects";
+import { site } from "@/content/site";
 import { cn } from "@/lib/cn";
 
 /**
@@ -49,7 +50,7 @@ export function SelectedWork() {
             Each project begins with a site and a way of living. These conceptual commissions
             explore how restrained architecture can hold everyday life with care.
           </p>
-          <ArrowLink href="/work" className="mt-6">
+          <ArrowLink href="/work" className="mt-6" cta={{ id: "see_work", location: "selected_work" }}>
             Index of projects
           </ArrowLink>
         </Reveal>
@@ -65,6 +66,19 @@ export function SelectedWork() {
           );
         })}
       </ul>
+
+      <Reveal className="grid-page mt-[var(--space-block)]">
+        <div className="rule col-span-12 flex flex-col gap-4 pt-6 sm:flex-row sm:items-baseline sm:justify-between lg:col-span-6 lg:col-start-7">
+          <p className="t-h3 font-normal">Have a site or a room in mind?</p>
+          <ArrowLink
+            href={site.primaryCta.href}
+            className="shrink-0 self-start"
+            cta={{ id: "start_project", location: "selected_work" }}
+          >
+            {site.primaryCta.label}
+          </ArrowLink>
+        </div>
+      </Reveal>
     </section>
   );
 }

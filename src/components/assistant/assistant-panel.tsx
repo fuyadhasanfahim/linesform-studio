@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { faq } from "@/content/studio";
 import { cn } from "@/lib/cn";
+import { ctaAttributes } from "@/lib/tracking/cta";
 
 /** Questions the assistant can answer, reusing the FAQ copy so answers never drift apart. */
 const TOPICS = ["project-types", "enquiry-contents", "timelines-budgets", "locations"]
@@ -133,11 +134,12 @@ export function AssistantPanel({ id, contactEmail, onClose }: AssistantPanelProp
         <ul aria-label="Go to" className="mt-4 grid grid-cols-1 gap-2">
           <li>
             <Link
-              href="/#enquiry"
+              href="/#contact"
               onClick={leave}
+              {...ctaAttributes({ id: "start_project", location: "assistant" })}
               className="flex min-h-11 items-center justify-center bg-charcoal px-4 text-[0.875rem] font-medium text-limestone transition-colors duration-300 hover:bg-olive-ink focus-visible:outline-charcoal"
             >
-              Start a project enquiry
+              Start a project
             </Link>
           </li>
           <li className="flex flex-wrap gap-x-5 gap-y-1 pt-1 text-[0.875rem]">

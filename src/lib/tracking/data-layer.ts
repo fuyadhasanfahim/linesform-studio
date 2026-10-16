@@ -13,13 +13,19 @@ type ConsentFlags = Pick<ConsentChoice, "analytics" | "marketing">;
 export type TrackedEvent =
   /** One per route, including the first. Use it as the page-view trigger in GTM. */
   | "virtual_page_view"
+  /** A "Start a project", "See the work" or project link was clicked (params: cta_id, cta_location). */
+  | "cta_click"
+  /** The enquiry form came into view. Once per page view. */
+  | "enquiry_form_view"
+  /** A visitor first moved into an enquiry field. Once per page view. */
+  | "enquiry_form_start"
   /** The enquiry form passed client checks and was submitted. Not a conversion. */
   | "enquiry_submit"
   /** The server confirmed the enquiry was delivered. The only conversion event. */
   | "enquiry_sent"
   /** The server could not deliver the enquiry (not configured, or failed). */
   | "enquiry_not_sent"
-  /** A mailto link or a link to the enquiry form was clicked. */
+  /** A mailto link was clicked (only rendered when CONTACT_EMAIL is set). */
   | "contact_click";
 
 type Params = Record<string, string | number | boolean>;

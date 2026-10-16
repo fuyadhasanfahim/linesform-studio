@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { Arrow } from "@/components/ui/arrow-link";
 import type { NavItem } from "@/content/site";
+import { ctaAttributes } from "@/lib/tracking/cta";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { HomeLink } from "./home-link";
 import { Wordmark } from "./wordmark";
@@ -18,9 +20,11 @@ function unlockScroll() {
  */
 export function MobileNav({
   items,
+  cta,
   disclosure,
 }: {
   items: readonly NavItem[];
+  cta: NavItem;
   disclosure: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -120,11 +124,22 @@ export function MobileNav({
                 </li>
               ))}
             </ul>
+            <div className="nav-dialog-item mt-10" style={{ "--i": items.length } as CSSProperties}>
+              <Link
+                href={cta.href}
+                onClick={closeMenu}
+                {...ctaAttributes({ id: "start_project", location: "mobile_menu" })}
+                className="group inline-flex min-h-12 items-center gap-4 bg-limestone px-6 text-[0.9375rem] font-medium text-charcoal"
+              >
+                {cta.label}
+                <Arrow />
+              </Link>
+            </div>
           </nav>
 
           <p
             className="nav-dialog-item t-small mt-auto max-w-xs text-stone"
-            style={{ "--i": items.length } as CSSProperties}
+            style={{ "--i": items.length + 1 } as CSSProperties}
           >
             {disclosure}
           </p>

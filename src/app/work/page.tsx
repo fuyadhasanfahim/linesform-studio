@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AssetImage } from "@/components/media/asset-image";
 import { Reveal } from "@/components/motion/reveal";
-import { ArrowLink } from "@/components/ui/arrow-link";
+import { ButtonLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { ProjectIndex, type ProjectRow } from "@/components/work/project-index";
 import { projects } from "@/content/projects";
@@ -74,9 +74,9 @@ export default function WorkPage() {
         <Reveal className="grid-page mt-[var(--space-block)]">
           <div className="col-span-12 md:col-span-7 lg:col-span-5 lg:col-start-8">
             <p className="t-h3 font-normal">Considering a project of your own?</p>
-            <ArrowLink href="/#contact" className="mt-6">
-              Start an enquiry
-            </ArrowLink>
+            <ButtonLink href={site.primaryCta.href} className="mt-6" cta={{ id: "start_project", location: "work_index" }}>
+              {site.primaryCta.label}
+            </ButtonLink>
           </div>
         </Reveal>
       </section>

@@ -61,14 +61,19 @@ the site pushes a consent update, deletes the first-party tracking cookies (`_ga
 | Event | When | Parameters |
 | --- | --- | --- |
 | `virtual_page_view` | Once per route, including the first page (hash changes are not page views) | `page_path`, `page_location` |
-| `contact_click` | A `mailto:` link or a link to the enquiry form is clicked | `link_type`: `email` or `enquiry_form` |
+| `cta_click` | A tagged call to action is clicked (any link with `data-cta-id`) | `cta_id`: `start_project`, `see_work` or `read_project`; `cta_location`: e.g. `hero`, `header`, `approach`, `project:courtyard-house` |
+| `contact_click` | A `mailto:` link is clicked (rendered only when `CONTACT_EMAIL` is set) | `link_type`: `email` |
+| `enquiry_form_view` | At least a quarter of the enquiry form is on screen — once per page view | `form`: `project_enquiry` |
+| `enquiry_form_start` | A visitor first moves into an enquiry field — once per page view | `form` |
 | `enquiry_submit` | The enquiry form passed client-side checks and was submitted — **not** a conversion | `form`: `project_enquiry` |
 | `enquiry_sent` | The server confirmed delivery to the enquiry service — the **only** conversion event | `form` |
 | `enquiry_not_sent` | The server did not deliver (not configured, or failed) | `form`, `reason`: `unavailable` or `error` |
 | `consent_update` | The visitor changed their choice while GTM was loaded | `analytics_consent`, `marketing_consent` |
 
-No event carries names, email addresses, project details, budgets or message text. With the
-current configuration (no `ENQUIRY_WEBHOOK_URL`), `enquiry_sent` never fires.
+No event carries names, email addresses, project details, budgets or message text — the project
+type chosen in the form is not sent either. With the current configuration (no
+`ENQUIRY_WEBHOOK_URL`), `enquiry_sent` never fires. The funnel these events form, and the
+experiments they support, are described in [`cro-measurement-plan.md`](./cro-measurement-plan.md).
 
 ## 4. Configure the GTM container
 
@@ -78,12 +83,15 @@ Create a **Web** container at <https://tagmanager.google.com>, then in its works
 - Admin → Container Settings → enable **Consent overview**.
 - Do not add a Consent Management Platform template: the site sends the consent signals itself.
 
-**Variables** (Variables → New → Data Layer Variable): `page_path`, `page_location`, `link_type`,
-`form`, `reason`.
+**Variables** (Variables → New → Data Layer Variable): `page_path`, `page_location`, `cta_id`,
+`cta_location`, `link_type`, `form`, `reason`.
 
 **Triggers** (Triggers → New → Custom Event):
 - `CE – virtual_page_view` — event name `virtual_page_view`
 - `CE – enquiry_sent` — event name `enquiry_sent`
+- `CE – cta_click` — event name `cta_click`
+- `CE – enquiry_form_view` — event name `enquiry_form_view`
+- `CE – enquiry_form_start` — event name `enquiry_form_start`
 - `CE – contact_click` — event name `contact_click` (optional)
 
 ### GA4
@@ -100,6 +108,11 @@ Create a **Web** container at <https://tagmanager.google.com>, then in its works
    trigger `CE – virtual_page_view`.
 5. (Optional) GA4 Event `generate_lead` on trigger `CE – enquiry_sent`, parameter `form` = `{{form}}`;
    mark `generate_lead` as a key event in GA4.
+6. (Funnel) One GA4 Event tag per funnel event, each sending the same event name:
+   `cta_click` (parameters `cta_id` = `{{cta_id}}`, `cta_location` = `{{cta_location}}`),
+   `enquiry_form_view` and `enquiry_form_start` (parameter `form` = `{{form}}`). In GA4 → Admin →
+   Custom definitions, register `cta_id` and `cta_location` as event-scoped dimensions so they can
+   be reported. Do not mark these as key events: only a delivered enquiry is a conversion.
 
 ### Google Ads (only if campaigns run)
 

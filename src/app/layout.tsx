@@ -87,7 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Only when a GTM container is configured: otherwise there are no optional cookies to ask about. */}
         {gtmId ? <ConsentRoot gtmId={gtmId} /> : null}
         <MotionProvider>
-          <SiteHeader items={site.nav} disclosure={site.disclosure} />
+          <SiteHeader items={site.nav} cta={site.primaryCta} disclosure={site.disclosure} />
           <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
           </main>

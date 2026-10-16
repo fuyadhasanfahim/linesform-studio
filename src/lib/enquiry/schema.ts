@@ -13,6 +13,20 @@ export const PROJECT_TYPES = [
   "Something else",
 ] as const;
 
+export type ProjectType = (typeof PROJECT_TYPES)[number];
+
+export function isProjectType(value: unknown): value is ProjectType {
+  return typeof value === "string" && (PROJECT_TYPES as readonly string[]).includes(value);
+}
+
+/** Query parameter that pre-selects the project type, e.g. /?type=Hospitality#contact */
+export const PROJECT_TYPE_PARAM = "type";
+
+/** Link to the enquiry form, optionally with the project type chosen in advance. */
+export function enquiryHref(type?: ProjectType): string {
+  return type ? `/?${PROJECT_TYPE_PARAM}=${encodeURIComponent(type)}#contact` : "/#contact";
+}
+
 export const BUDGETS = [
   "Not yet defined",
   "Up to €250k",

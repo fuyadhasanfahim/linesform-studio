@@ -1,5 +1,7 @@
 import { Reveal, RevealItem } from "@/components/motion/reveal";
+import { ButtonLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
+import { site } from "@/content/site";
 import { approach } from "@/content/studio";
 
 export function Approach() {
@@ -13,6 +15,17 @@ export function Approach() {
               {approach.heading}
             </h2>
             <p className="mt-6 measure text-stone">{approach.intro}</p>
+            <div className="mt-10 hidden lg:block">
+              <p className="measure text-limestone">{approach.bridge}</p>
+              <ButtonLink
+                href={site.primaryCta.href}
+                tone="light"
+                className="mt-5"
+                cta={{ id: "start_project", location: "approach" }}
+              >
+                {site.primaryCta.label}
+              </ButtonLink>
+            </div>
           </Reveal>
         </div>
 
@@ -36,11 +49,28 @@ export function Approach() {
                     {step.title}
                   </h3>
                   <p className="mt-3 measure-wide text-limestone/80">{step.body}</p>
+                  <p className="t-small mt-5 flex flex-wrap gap-x-3 gap-y-1">
+                    <span className="t-label text-stone">{approach.sharedLabel}</span>
+                    <span>{step.shared}</span>
+                  </p>
                 </div>
               </RevealItem>
             ))}
           </ol>
         </Reveal>
+
+        {/* On small screens the invitation follows the steps instead of preceding them. */}
+        <div className="col-span-12 lg:hidden">
+          <p className="measure text-limestone">{approach.bridge}</p>
+          <ButtonLink
+            href={site.primaryCta.href}
+            tone="light"
+            className="mt-5"
+            cta={{ id: "start_project", location: "approach" }}
+          >
+            {site.primaryCta.label}
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );

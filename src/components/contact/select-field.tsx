@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import {
   useId,
   useRef,
@@ -30,6 +31,11 @@ interface SelectFieldProps {
   /** Shared visual style of the form's controls. */
   controlClassName: string;
   onValueChange?: (value: string) => void;
+  /**
+   * Query parameter that may pre-select an option, e.g. `type` for
+   * /?type=Hospitality. Ignored unless it names one of the options.
+   */
+  presetParam?: string;
 }
 
 const noop = () => () => {};
@@ -121,13 +127,20 @@ function Combobox({
   describedBy,
   controlClassName,
   onValueChange,
+  presetParam,
 }: SelectFieldProps) {
   const listId = useId();
+  // Read only here: the combobox renders after hydration, so the page
+  // itself stays static.
+  const searchParams = useSearchParams();
+  const requested = presetParam ? searchParams.get(presetParam) : null;
+  const preset = options.some((option) => option.value === requested) ? (requested ?? "") : "";
   const comboRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const typeahead = useRef({ text: "", at: 0 });
 
-  const [value, setValue] = useState(defaultValue ?? "");
+  const [chosen, setChosen] = useState<string | null>(null);
+  const value = chosen ?? (defaultValue || preset);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
   const [placement, setPlacement] = useState<"below" | "above">("below");
@@ -164,7 +177,7 @@ function Combobox({
   function choose(index: number) {
     const option = options[index];
     if (!option) return;
-    setValue(option.value);
+    setChosen(option.value);
     setOpen(false);
     if (option.value !== value) onValueChange?.(option.value);
   }

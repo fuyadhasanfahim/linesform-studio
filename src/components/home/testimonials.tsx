@@ -11,7 +11,7 @@ export function Testimonials() {
   const [featured, ...rest] = testimonials.items;
 
   return (
-    <section aria-labelledby="perspectives-heading" className="bg-limestone-deep">
+    <section aria-labelledby="perspectives-heading" className="bg-limestone">
       <div className="shell section-space">
         <div className="grid-page items-end gap-y-6">
           <Reveal className="col-span-12 lg:col-span-6">

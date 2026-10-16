@@ -5,10 +5,11 @@ import { AssetImage } from "@/components/media/asset-image";
 import { Reveal, RevealItem } from "@/components/motion/reveal";
 import { NextProject } from "@/components/project/next-project";
 import { ProjectGallery } from "@/components/project/project-gallery";
-import { ArrowLink } from "@/components/ui/arrow-link";
+import { ArrowLink, ButtonLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getNextProject, getProject, projects } from "@/content/projects";
 import { absoluteUrl, pageUrls, publishAbsoluteUrls, site } from "@/content/site";
+import { enquiryHref } from "@/lib/enquiry/schema";
 import { JsonLd } from "@/lib/json-ld";
 
 export function generateStaticParams() {
@@ -102,25 +103,49 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
         </figcaption>
       </figure>
 
+      <section aria-labelledby="question-heading" className="shell section-space pb-0">
+        <div className="grid-page gap-y-10">
+          <Reveal className="col-span-12 lg:col-span-7">
+            <SectionLabel>The question</SectionLabel>
+            <h2 id="question-heading" className="t-h2 mt-6 max-w-[22ch]">
+              {project.study.question}
+            </h2>
+          </Reveal>
+          <Reveal className="col-span-12 md:col-span-8 lg:col-span-4 lg:col-start-9 lg:pt-12" delay={0.1}>
+            <h3 className="t-label text-olive-ink">Working within</h3>
+            <ul className="mt-4">
+              {project.study.constraints.map((constraint) => (
+                <li key={constraint} className="rule py-3 text-[0.9375rem]">
+                  {constraint}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
       <section aria-labelledby="concept-heading" className="shell section-space">
         <div className="grid-page gap-y-10">
           <Reveal className="col-span-12 lg:col-span-5">
-            <SectionLabel>Concept</SectionLabel>
+            <SectionLabel>The response</SectionLabel>
             <h2 id="concept-heading" className="t-h2 mt-6 max-w-[14ch]">
               {project.concept.heading}
             </h2>
           </Reveal>
-          <Reveal className="t-lead col-span-12 space-y-5 measure-wide lg:col-span-6 lg:col-start-7 lg:pt-12" delay={0.1}>
-            {project.concept.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-            ))}
+          <Reveal className="col-span-12 measure-wide lg:col-span-6 lg:col-start-7 lg:pt-12" delay={0.1}>
+            <p className="t-lead">{project.study.response}</p>
+            <div className="mt-6 space-y-5 text-olive-ink">
+              {project.concept.paragraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+              ))}
+            </div>
           </Reveal>
         </div>
       </section>
 
       <ProjectGallery items={project.gallery} title={project.title} />
 
-      <section aria-label="Design intent" className="bg-limestone-deep">
+      <section aria-label="Guiding idea" className="bg-limestone-deep">
         <Reveal className="shell grid-page py-[var(--space-block)]">
           <blockquote className="col-span-12 lg:col-span-9 lg:col-start-2">
             <p className="t-quote">“{project.quote}”</p>
@@ -166,7 +191,8 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
           </div>
 
           <Reveal className="col-span-12 lg:col-span-7 lg:col-start-5">
-            <p className="t-lead">{project.closing}</p>
+            <h3 className="t-label text-olive-ink">Design intent</h3>
+            <p className="t-lead mt-4">{project.closing}</p>
             <p className="t-small mt-6 text-olive-ink">
               {project.title} is a conceptual project. The site, client and images are fictional and
               were created for this portfolio.
@@ -175,23 +201,32 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
         </div>
       </section>
 
-      <NextProject project={next} />
-
-      <section aria-labelledby="project-cta" className="shell section-space">
-        <div className="grid-page gap-y-8">
+      <section aria-labelledby="project-cta" className="bg-limestone-deep">
+        <Reveal className="shell grid-page gap-y-8 py-[var(--space-block)]">
           <h2 id="project-cta" className="t-h2 col-span-12 max-w-[16ch] lg:col-span-7">
-            Have a site, a room or a building in mind?
+            {project.enquiry.prompt}
           </h2>
           <div className="col-span-12 self-end lg:col-span-4 lg:col-start-9">
             <p className="measure text-olive-ink">
-              Every project starts with a conversation about place, use and ambition.
+              Bring a site, a plan or only an idea; the brief does not need to be finished. The enquiry
+              form opens with “{project.enquiry.type}” already chosen.
             </p>
-            <ArrowLink href="/#contact" className="mt-6">
-              Start an enquiry
-            </ArrowLink>
+            <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-5">
+              <ButtonLink
+                href={enquiryHref(project.enquiry.type)}
+                cta={{ id: "start_project", location: `project:${project.slug}` }}
+              >
+                {site.primaryCta.label}
+              </ButtonLink>
+              <ArrowLink href="/work" cta={{ id: "see_work", location: `project:${project.slug}` }}>
+                See all projects
+              </ArrowLink>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
+
+      <NextProject project={next} />
     </article>
   );
 }

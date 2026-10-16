@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { NavItem } from "@/content/site";
 import { cn } from "@/lib/cn";
+import { ctaAttributes } from "@/lib/tracking/cta";
 import { HomeLink } from "./home-link";
 import { MobileNav } from "./mobile-nav";
 import { Wordmark } from "./wordmark";
@@ -25,9 +26,12 @@ export function isCurrent(pathname: string, href: string): boolean {
  */
 export function SiteHeader({
   items,
+  cta,
   disclosure,
 }: {
   items: readonly NavItem[];
+  /** The one conversion action, set apart from the navigation links. */
+  cta: NavItem;
   disclosure: string;
 }) {
   const pathname = usePathname();
@@ -57,23 +61,32 @@ export function SiteHeader({
           <Wordmark />
         </HomeLink>
 
-        <nav aria-label="Primary" className="hidden md:block">
-          <ul className="flex items-center gap-8 lg:gap-10">
-            {items.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
-                  className="link-draw text-[0.9375rem] font-medium tracking-[0.01em]"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="hidden items-center gap-8 md:flex lg:gap-10">
+          <nav aria-label="Primary">
+            <ul className="flex items-center gap-8 lg:gap-10">
+              {items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                    className="link-draw text-[0.9375rem] font-medium tracking-[0.01em]"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <Link
+            href={cta.href}
+            {...ctaAttributes({ id: "start_project", location: "header" })}
+            className="inline-flex min-h-10 items-center border border-charcoal px-4 text-[0.9375rem] font-medium tracking-[0.01em] transition-colors duration-300 hover:bg-charcoal hover:text-limestone"
+          >
+            {cta.label}
+          </Link>
+        </div>
 
-        <MobileNav items={items} disclosure={disclosure} />
+        <MobileNav items={items} cta={cta} disclosure={disclosure} />
       </div>
     </header>
   );

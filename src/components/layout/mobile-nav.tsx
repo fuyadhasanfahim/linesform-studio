@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { NavItem } from "@/content/site";
 import { useMediaQuery } from "@/lib/use-media-query";
+import { HomeLink } from "./home-link";
 import { Wordmark } from "./wordmark";
 
 function unlockScroll() {
@@ -89,9 +90,9 @@ export function MobileNav({
       >
         <div className="shell flex h-full flex-col pb-8">
           <div className="flex h-[var(--header-height)] shrink-0 items-center justify-between">
-            <Link href="/" onClick={closeMenu} aria-label="Linesform Studio, home" className="-my-2 py-2">
+            <HomeLink onNavigate={closeMenu} className="-my-2 py-2">
               <Wordmark inverse />
-            </Link>
+            </HomeLink>
             <button
               type="button"
               onClick={closeMenu}
@@ -113,15 +114,8 @@ export function MobileNav({
                   className="nav-dialog-item rule-inverse"
                   style={{ "--i": index } as CSSProperties}
                 >
-                  <Link
-                    href={item.href}
-                    onClick={closeMenu}
-                    className="flex items-baseline justify-between gap-4 py-4"
-                  >
+                  <Link href={item.href} onClick={closeMenu} className="block py-4">
                     <span className="t-h2">{item.label}</span>
-                    <span aria-hidden="true" className="t-numeral text-lg text-stone">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                   </Link>
                 </li>
               ))}

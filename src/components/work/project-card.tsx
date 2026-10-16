@@ -3,17 +3,16 @@ import { ViewTransition } from "react";
 import { AssetImage } from "@/components/media/asset-image";
 import { ImageReveal } from "@/components/motion/image-reveal";
 import { Arrow } from "@/components/ui/arrow-link";
-import { formatIndex, type Project } from "@/content/projects";
+import type { Project } from "@/content/projects";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
   variant: "landscape" | "portrait";
   sizes: string;
   headingLevel?: "h2" | "h3";
 }
 
-export function ProjectCard({ project, index, variant, sizes, headingLevel: Heading = "h3" }: ProjectCardProps) {
+export function ProjectCard({ project, variant, sizes, headingLevel: Heading = "h3" }: ProjectCardProps) {
   const asset = variant === "portrait" ? project.portraitAsset : project.heroAsset;
 
   return (
@@ -42,8 +41,7 @@ export function ProjectCard({ project, index, variant, sizes, headingLevel: Head
           </p>
           <p className="t-small text-balance text-olive-ink">{project.location}</p>
         </div>
-        <span className="flex shrink-0 items-center gap-3 pt-1">
-          <span className="t-numeral text-lg text-olive-ink">{formatIndex(index)}</span>
+        <span className="shrink-0 pt-2.5">
           <Arrow />
         </span>
       </div>

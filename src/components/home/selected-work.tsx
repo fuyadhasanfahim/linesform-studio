@@ -39,7 +39,7 @@ export function SelectedWork() {
     <section id="work" aria-labelledby="work-heading" className="shell section-space">
       <div className="grid-page items-end gap-y-8">
         <Reveal className="col-span-12 lg:col-span-7">
-          <SectionLabel index="01">Selected work</SectionLabel>
+          <SectionLabel>Selected work</SectionLabel>
           <h2 id="work-heading" className="t-h2 mt-6 max-w-[14ch]">
             Four studies in mass, light and material.
           </h2>
@@ -60,12 +60,7 @@ export function SelectedWork() {
           const slot = layout[index % layout.length];
           return (
             <li key={project.slug} className={cn(slot.className)}>
-              <ProjectCard
-                project={project}
-                index={index}
-                variant={slot.variant}
-                sizes={slot.sizes}
-              />
+              <ProjectCard project={project} variant={slot.variant} sizes={slot.sizes} />
             </li>
           );
         })}

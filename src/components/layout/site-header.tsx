@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { NavItem } from "@/content/site";
 import { cn } from "@/lib/cn";
+import { HomeLink } from "./home-link";
 import { MobileNav } from "./mobile-nav";
 import { Wordmark } from "./wordmark";
 
@@ -52,9 +53,9 @@ export function SiteHeader({
       )}
     >
       <div className="shell flex h-[var(--header-height)] items-center justify-between gap-6">
-        <Link href="/" className="-my-2 py-2" aria-label="Linesform Studio, home">
+        <HomeLink className="-my-2 py-2">
           <Wordmark />
-        </Link>
+        </HomeLink>
 
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8 lg:gap-10">

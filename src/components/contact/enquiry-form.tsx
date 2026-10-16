@@ -15,8 +15,8 @@ import {
   type Ref,
 } from "react";
 import { Arrow } from "@/components/ui/arrow-link";
-import { submitEnquiry, type EnquiryState } from "@/lib/enquiry/actions";
 import { cn } from "@/lib/cn";
+import { submitEnquiry, type EnquiryState } from "@/lib/enquiry/actions";
 import {
   BUDGETS,
   FIELD_ORDER,
@@ -28,11 +28,21 @@ import {
   type EnquiryField,
   type FieldErrors,
 } from "@/lib/enquiry/schema";
+import { track } from "@/lib/tracking/data-layer";
+import { SelectField } from "./select-field";
 
 const initialState: EnquiryState = { status: "idle", attempt: 0 };
 
+// Focus draws a 2px rule (border plus a 1px shadow) rather than an outline,
+// in keeping with the underlined fields.
 const controlClass =
-  "w-full rounded-none border-0 border-b border-[var(--line-strong)] bg-transparent px-0 py-3 text-[1.0625rem] text-charcoal transition-colors duration-300 placeholder:text-olive-ink/70 hover:border-charcoal focus:border-charcoal focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-charcoal";
+  "w-full rounded-none border-0 border-b border-[var(--line-strong)] bg-transparent px-0 py-3 text-[1.0625rem] text-charcoal transition-[border-color,box-shadow] duration-300 placeholder:text-olive-ink/70 hover:border-charcoal focus:border-charcoal focus:shadow-[0_1px_0_0_var(--color-charcoal)] focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-charcoal";
+
+const PROJECT_TYPE_OPTIONS = PROJECT_TYPES.map((type) => ({ value: type, label: type }));
+const BUDGET_OPTIONS = [
+  { value: "", label: "Prefer not to say" },
+  ...BUDGETS.map((budget) => ({ value: budget, label: budget })),
+];
 
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 
@@ -42,7 +52,9 @@ function isField(name: string): name is EnquiryField {
 
 function focusFirstInvalid(form: HTMLFormElement | null, found: FieldErrors) {
   const first = FIELD_ORDER.find((field) => found[field]);
-  const element = first ? form?.elements.namedItem(first) : null;
+  if (!first || !form) return;
+  // Custom selects keep their value in a hidden input; focus the visible control.
+  const element = form.querySelector(`[data-field="${first}"]`) ?? form.elements.namedItem(first);
   if (element instanceof HTMLElement) element.focus();
 }
 
@@ -88,6 +100,11 @@ export function EnquiryForm() {
     } else {
       statusRef.current?.focus();
     }
+    // Analytics (only after consent): a conversion only when delivery is confirmed.
+    if (state.status === "sent") track("enquiry_sent", { form: "project_enquiry" });
+    else if (state.status === "unavailable" || state.status === "error") {
+      track("enquiry_not_sent", { form: "project_enquiry", reason: state.status });
+    }
   }, [state.attempt, state.status, state.errors]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -96,7 +113,9 @@ export function EnquiryForm() {
       event.preventDefault();
       setErrors(found);
       focusFirstInvalid(formRef.current, found);
+      return;
     }
+    track("enquiry_submit", { form: "project_enquiry" });
   }
 
   function revalidate(field: Control & { name: EnquiryField }) {
@@ -116,6 +135,13 @@ export function EnquiryForm() {
     if (field && errors[field.name]) revalidate(field);
   }
 
+  // Custom selects report their value directly (a hidden input fires no change event).
+  function handleSelectChange(name: EnquiryField, value: string) {
+    if (!errors[name] || !formRef.current) return;
+    const values = { ...readEnquiry(new FormData(formRef.current)), [name]: value };
+    setErrors((previous) => ({ ...previous, [name]: validateField(name, values) }));
+  }
+
   // Selects are keyed by attempt below: React's post-action form reset only
   // re-applies defaults reliably on mount, so remounting keeps the chosen options.
   const errorCount = FIELD_ORDER.filter((field) => errors[field]).length;
@@ -128,6 +154,8 @@ export function EnquiryForm() {
   return (
     <form
       ref={formRef}
+      id="enquiry"
+      aria-label="Project enquiry"
       action={formAction}
       onSubmit={handleSubmit}
       onBlur={handleBlur}
@@ -180,27 +208,20 @@ export function EnquiryForm() {
         error={errors.projectType}
         errorId={`${formId}-projectType-error`}
       >
-        <SelectFrame>
-          <select
-            key={`projectType-${state.attempt}`}
-            id={`${formId}-projectType`}
-            name="projectType"
-            required
-            defaultValue={values?.projectType ?? ""}
-            aria-invalid={errors.projectType ? true : undefined}
-            aria-describedby={describe("projectType")}
-            className={cn(controlClass, "cursor-pointer appearance-none pr-8")}
-          >
-            <option value="" disabled>
-              Choose one
-            </option>
-            {PROJECT_TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </SelectFrame>
+        <SelectField
+          key={`projectType-${state.attempt}`}
+          id={`${formId}-projectType`}
+          labelId={`${formId}-projectType-label`}
+          name="projectType"
+          options={PROJECT_TYPE_OPTIONS}
+          placeholder="Choose one"
+          required
+          defaultValue={values?.projectType ?? ""}
+          invalid={Boolean(errors.projectType)}
+          describedBy={describe("projectType")}
+          controlClassName={controlClass}
+          onValueChange={(value) => handleSelectChange("projectType", value)}
+        />
       </Field>
 
       <Field
@@ -210,24 +231,18 @@ export function EnquiryForm() {
         error={errors.budget}
         errorId={`${formId}-budget-error`}
       >
-        <SelectFrame>
-          <select
-            key={`budget-${state.attempt}`}
-            id={`${formId}-budget`}
-            name="budget"
-            defaultValue={values?.budget ?? ""}
-            aria-invalid={errors.budget ? true : undefined}
-            aria-describedby={describe("budget")}
-            className={cn(controlClass, "cursor-pointer appearance-none pr-8")}
-          >
-            <option value="">Prefer not to say</option>
-            {BUDGETS.map((budget) => (
-              <option key={budget} value={budget}>
-                {budget}
-              </option>
-            ))}
-          </select>
-        </SelectFrame>
+        <SelectField
+          key={`budget-${state.attempt}`}
+          id={`${formId}-budget`}
+          labelId={`${formId}-budget-label`}
+          name="budget"
+          options={BUDGET_OPTIONS}
+          defaultValue={values?.budget ?? ""}
+          invalid={Boolean(errors.budget)}
+          describedBy={describe("budget")}
+          controlClassName={controlClass}
+          onValueChange={(value) => handleSelectChange("budget", value)}
+        />
       </Field>
 
       <Field
@@ -252,7 +267,7 @@ export function EnquiryForm() {
           aria-describedby={describe("message", true)}
           className={cn(
             controlClass,
-            "mt-3 min-h-40 resize-y border px-4 leading-relaxed aria-[invalid=true]:border-charcoal",
+            "mt-3 min-h-40 resize-y border px-4 leading-relaxed focus:shadow-[0_0_0_1px_var(--color-charcoal)] aria-[invalid=true]:border-charcoal",
           )}
         />
       </Field>
@@ -267,14 +282,14 @@ export function EnquiryForm() {
         <p className="t-small max-w-sm text-olive-ink">
           Your details are used only to reply to this enquiry. See the{" "}
           <Link href="/privacy" className="underline underline-offset-4 hover:no-underline">
-            privacy notice
+            privacy policy
           </Link>
           .
         </p>
         <button
           type="submit"
           disabled={isPending}
-          className="group inline-flex min-h-13 shrink-0 items-center justify-center gap-5 bg-charcoal px-8 text-[0.9375rem] font-medium text-limestone transition-colors duration-300 hover:bg-olive-ink disabled:cursor-progress disabled:bg-olive-ink"
+          className="group inline-flex min-h-13 shrink-0 items-center justify-center gap-5 bg-charcoal px-8 text-[0.9375rem] font-medium text-limestone transition-colors duration-300 hover:bg-olive-ink focus-visible:outline-charcoal disabled:cursor-progress disabled:bg-olive-ink"
         >
           {isPending ? "Sending…" : "Send enquiry"}
           <Arrow />
@@ -306,7 +321,7 @@ interface FieldProps {
 function Field({ id, label, children, required, optional, error, errorId, hint, hintId, className }: FieldProps) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="t-label flex items-baseline gap-2 text-olive-ink">
+      <label id={`${id}-label`} htmlFor={id} className="t-label flex items-baseline gap-2 text-olive-ink">
         {label}
         {required ? <span aria-hidden="true">*</span> : null}
         {optional ? <span className="font-medium tracking-normal normal-case">(optional)</span> : null}
@@ -326,24 +341,6 @@ function Field({ id, label, children, required, optional, error, errorId, hint, 
           </span>
         </p>
       ) : null}
-    </div>
-  );
-}
-
-function SelectFrame({ children }: { children: ReactNode }) {
-  return (
-    <div className="relative">
-      {children}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 12 8"
-        className="pointer-events-none absolute top-1/2 right-1 h-2 w-3 -translate-y-1/2"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.1"
-      >
-        <path d="M1 1.5l5 5 5-5" />
-      </svg>
     </div>
   );
 }

@@ -12,7 +12,7 @@ export default function NotFound() {
     <div className="shell section-space pt-[clamp(3rem,1rem+8vw,9rem)]">
       <div className="grid-page gap-y-10">
         <div className="col-span-12 lg:col-span-8">
-          <SectionLabel index="404">Not found</SectionLabel>
+          <SectionLabel>Error 404</SectionLabel>
           <h1 className="t-h1 mt-6 max-w-[14ch]">This room has not been built.</h1>
           <p className="t-lead mt-6 measure">
             The page you were looking for does not exist or has moved.

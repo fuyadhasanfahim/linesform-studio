@@ -302,15 +302,7 @@ export function getProject(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
 
-export function getProjectIndex(slug: string): number {
-  return projects.findIndex((project) => project.slug === slug);
-}
-
 export function getNextProject(slug: string): Project {
-  const index = getProjectIndex(slug);
+  const index = projects.findIndex((project) => project.slug === slug);
   return projects[(index + 1) % projects.length];
-}
-
-export function formatIndex(index: number): string {
-  return String(index + 1).padStart(2, "0");
 }

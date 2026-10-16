@@ -8,9 +8,7 @@ export function Approach() {
       <div className="shell section-space grid-page gap-y-14">
         <div className="col-span-12 lg:col-span-4">
           <Reveal className="lg:sticky lg:top-[calc(var(--header-height)+2.5rem)]">
-            <SectionLabel index="03" tone="dark">
-              {approach.label}
-            </SectionLabel>
+            <SectionLabel tone="dark">{approach.label}</SectionLabel>
             <h2 id="approach-heading" className="t-h2 mt-6 max-w-[12ch]">
               {approach.heading}
             </h2>

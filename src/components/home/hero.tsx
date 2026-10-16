@@ -36,11 +36,8 @@ export function Hero() {
         >
           <p className="t-label text-olive-ink">Practice</p>
           <ul className="rule mt-4 pt-3 text-[0.9375rem]">
-            {hero.typologies.map((typology, index) => (
-              <li key={typology} className="flex items-baseline gap-4 py-1">
-                <span className="w-6 text-[0.75rem] tabular-nums text-olive-ink">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+            {hero.typologies.map((typology) => (
+              <li key={typology} className="py-1">
                 {typology}
               </li>
             ))}

@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useState, type FocusEvent, type PointerEvent, type ReactNode } from "react";
 import { Arrow } from "@/components/ui/arrow-link";
 import { cn } from "@/lib/cn";
-import { RICH_MOTION_QUERY, useMediaQuery } from "@/lib/use-media-query";
+import { RICH_MOTION_QUERY } from "@/lib/media-queries";
+import { useMediaQuery } from "@/lib/use-media-query";
 
 export interface ProjectRow {
   slug: string;

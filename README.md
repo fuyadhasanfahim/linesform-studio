@@ -20,6 +20,7 @@ pnpm dev                     # http://localhost:3000
 | `pnpm assets:plan` | Lists every planned image with its estimated cost. No API calls. |
 | `pnpm assets:verify` | Free metadata call confirming `IMAGE_GEN_MODEL_NAME` exists |
 | `pnpm assets:generate --ids a,b --confirm` | **Paid.** Generates exactly the listed images |
+| `pnpm assets:import` | Validates image files already in `public/images` and records them in the manifest. No API calls. `--check` only verifies. |
 | `pnpm video:plan` | Prints the optional hero-video plan. No API calls. |
 
 ## Structure
@@ -85,10 +86,14 @@ Suitable receivers include a small serverless function that sends email through 
 - Model: `gemini-nano-banana-2.1` (verified on 2026-10-15 with `models.get`: "Nano Banana 2.1", supports `generateContent`).
 - Endpoint: `POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent` with `responseModalities: ["IMAGE"]` and `imageConfig: { aspectRatio, imageSize }`.
 - The key is sent in the `x-goog-api-key` header and is read only by the Node scripts. There is **no generation endpoint on the website**, so visitors cannot trigger paid requests.
-- Safeguards: paid runs need `--confirm` and an explicit `--ids`/`--batch`; generated images are skipped unless `--force`; at most 20 per run; a lock file prevents concurrent runs; no automatic retries; failures are recorded and the run continues.
+- Safeguards: paid runs need `--confirm` and an explicit `--ids`/`--batch`; generated images are skipped unless `--force`; at most 20 per run; a lock file prevents concurrent runs; no automatic retries; failures are recorded, and missing credentials, an invalid model or a quota error stop the run.
 - Output: optimised JPEG in `public/images/…` plus a blur placeholder. Originals are kept locally in `.generated-originals/` (git-ignored) so they can be re-processed without regenerating.
 
 Until an image is generated, `AssetImage` renders a clearly labelled placeholder at the final aspect ratio, so the layout never shifts. After generating, review each image and adjust its `alt` text in the manifest to match what was actually produced.
+
+### Images supplied as files
+
+The current 17 images were made outside this repository and committed as JPEGs at the manifest paths. `pnpm assets:import` checks that each file exists, is a real JPEG and decodes completely, then records its real pixel size, a blur placeholder, its byte size and a short SHA-256 under `source`. When a file's shape differs from the specified ratio, the manifest keeps the file's real ratio in `aspectRatio` (used by the layout) and the original in `requestedAspectRatio` (used if the image is ever regenerated). Files are served through `next/image` (AVIF/WebP at the widths each layout needs), so the multi-megabyte sources are never sent to browsers. To replace an image, overwrite the file at the same path and run `pnpm assets:import` again.
 
 ## Optional hero video (Gemini Omni)
 
@@ -102,4 +107,4 @@ The plan is stored under `video` in the manifest and is **not recommended for la
 
 ## SEO
 
-Per-page metadata and canonical URLs, Open Graph and Twitter cards (generated at build time with brand typography; they use the hero photograph once it exists), `sitemap.xml`, `robots.txt`, `WebSite` and `BreadcrumbList` JSON-LD. `SITE_URL` sets the production origin (defaults to `https://linesformstudio.com`). No organisation, review or award markup is emitted, because the practice is fictional.
+Per-page metadata and canonical URLs, Open Graph and Twitter cards (generated at build time with brand typography and a 560×630 crop of the site or project hero photograph), `sitemap.xml`, `robots.txt`, `WebSite` and `BreadcrumbList` JSON-LD. `SITE_URL` sets the production origin (defaults to `https://linesformstudio.com`). No organisation, review or award markup is emitted, because the practice is fictional.

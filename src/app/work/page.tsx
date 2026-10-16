@@ -6,6 +6,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { ProjectIndex, type ProjectRow } from "@/components/work/project-index";
 import { formatIndex, projects } from "@/content/projects";
 import { site } from "@/content/site";
+import { RICH_MOTION_QUERY } from "@/lib/media-queries";
 
 export const metadata: Metadata = {
   title: "Selected work",
@@ -32,14 +33,18 @@ export default function WorkPage() {
     ]),
   );
 
+  // Thumbnails are hidden where the floating preview is used (the `rich`
+  // variant). There the first one, loaded eagerly as the LCP image on other
+  // devices, resolves to the smallest file instead of a full-width one.
   const thumbnails = Object.fromEntries(
-    projects.map((project) => [
+    projects.map((project, index) => [
       project.slug,
       <AssetImage
         key={project.slug}
         id={project.heroAsset}
         aspect="3 / 2"
-        sizes="(min-width: 40rem) 50vw, 100vw"
+        sizes={`${RICH_MOTION_QUERY} 1px, (min-width: 40rem) 50vw, 100vw`}
+        eager={index === 0}
         decorative
       />,
     ]),

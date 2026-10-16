@@ -4,7 +4,7 @@ export const alt = "Linesform Studio — architecture and interiors shaped by li
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
   return renderOgCard({
     eyebrow: "Linesform Studio",
     title: "Architecture drawn from light and material.",

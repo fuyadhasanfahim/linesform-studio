@@ -11,7 +11,7 @@ export function Materials() {
       <div className="shell section-space">
         <div className="grid-page items-end gap-y-6">
           <Reveal className="col-span-12 lg:col-span-7">
-            <SectionLabel index="04">{materials.label}</SectionLabel>
+            <SectionLabel>{materials.label}</SectionLabel>
             <h2 id="materials-heading" className="t-h2 mt-6 max-w-[15ch]">
               {materials.heading}
             </h2>
@@ -37,10 +37,7 @@ export function Materials() {
                   sizes="(min-width: 108rem) 25rem, (min-width: 64rem) 23vw, 48vw"
                 />
               </ImageReveal>
-              <p className="t-label mt-5 text-olive-ink">
-                Material {String(index + 1).padStart(2, "0")}
-              </p>
-              <h3 className="t-h3 mt-2">{item.name}</h3>
+              <h3 className="t-h3 mt-5">{item.name}</h3>
               <p className="t-small mt-2 max-w-[28ch] text-olive-ink">{item.note}</p>
             </li>
           ))}

@@ -1,3 +1,4 @@
+import { site } from "@/content/site";
 import type { EnquiryValues } from "./schema";
 
 export type DeliveryResult =
@@ -43,7 +44,7 @@ export async function deliverEnquiry(values: EnquiryValues): Promise<DeliveryRes
       headers,
       body: JSON.stringify({
         type: "project-enquiry",
-        source: "linesformstudio.com",
+        source: site.url,
         submittedAt: new Date().toISOString(),
         ...values,
       }),

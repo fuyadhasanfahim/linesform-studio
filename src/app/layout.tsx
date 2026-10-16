@@ -1,10 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { ContactAssistant } from "@/components/assistant/contact-assistant";
+import { ConsentRoot } from "@/components/consent/consent-root";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { site } from "@/content/site";
+import { gtmId } from "@/lib/tracking/config";
 import "./globals.css";
+
+/** Search Console HTML-tag verification token (not a tracking ID). Optional. */
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim() || undefined;
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -56,6 +62,7 @@ export const metadata: Metadata = {
     email: false,
     address: false,
   },
+  ...(googleVerification ? { verification: { google: googleVerification } } : {}),
 };
 
 export const viewport: Viewport = {
@@ -68,8 +75,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en-GB" className={`${cormorant.variable} ${cormorantItalic.variable} ${manrope.variable}`}>
       <body className="flex min-h-svh flex-col bg-limestone text-charcoal">
         <noscript>
-          {/* Without JavaScript, show everything that would otherwise reveal on scroll. */}
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}[data-reveal-cover]{display:none!important}`}</style>
+          {/* Without JavaScript, show everything that would otherwise reveal on scroll, and every FAQ answer. */}
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}[data-reveal-cover]{display:none!important}[data-accordion-panel]{grid-template-rows:1fr!important;visibility:visible!important}`}</style>
         </noscript>
         <a
           href="#main"
@@ -77,6 +84,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        {/* Only when a GTM container is configured: otherwise there are no optional cookies to ask about. */}
+        {gtmId ? <ConsentRoot gtmId={gtmId} /> : null}
         <MotionProvider>
           <SiteHeader items={site.nav} disclosure={site.disclosure} />
           <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
@@ -84,6 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <SiteFooter />
         </MotionProvider>
+        <ContactAssistant contactEmail={site.contactEmail} />
       </body>
     </html>
   );

@@ -11,7 +11,6 @@ import { useMediaQuery } from "@/lib/use-media-query";
 
 export interface ProjectRow {
   slug: string;
-  index: string;
   title: string;
   category: string;
   location: string;
@@ -70,10 +69,7 @@ export function ProjectIndex({ rows, previews, thumbnails }: ProjectIndexProps) 
               onBlur={() => setActive(null)}
               className="group grid grid-cols-12 items-baseline gap-x-[var(--gutter)] gap-y-3 py-7 sm:py-9"
             >
-              <span className="col-span-2 text-sm tabular-nums text-olive-ink sm:col-span-1">
-                {row.index}
-              </span>
-              <span className="col-span-10 sm:col-span-11 lg:col-span-6">
+              <span className="col-span-12 lg:col-span-7">
                 <span
                   className={cn(
                     "block font-display text-[clamp(2.4rem,1.5rem+3.3vw,4.75rem)] leading-[1] tracking-[-0.02em]",
@@ -85,15 +81,15 @@ export function ProjectIndex({ rows, previews, thumbnails }: ProjectIndexProps) 
                   {row.title}
                 </span>
               </span>
-              <span className="col-span-10 col-start-3 sm:col-span-5 sm:col-start-2 lg:col-span-3 lg:col-start-auto">
+              <span className="col-span-12 sm:col-span-6 lg:col-span-3">
                 <span className="block font-medium">{row.category}</span>
                 <span className="t-small block text-olive-ink">{row.location}</span>
               </span>
-              <span className="col-span-10 col-start-3 flex items-center justify-between gap-4 sm:col-span-6 sm:col-start-auto lg:col-span-2 lg:col-start-auto">
+              <span className="col-span-12 flex items-center justify-between gap-4 sm:col-span-6 lg:col-span-2">
                 <span className="tabular-nums text-olive-ink">{row.year}</span>
                 <Arrow />
               </span>
-              <span className="col-span-12 mt-3 rich:hidden sm:col-span-6 sm:col-start-2">
+              <span className="col-span-12 mt-3 rich:hidden sm:col-span-6">
                 {thumbnails[row.slug]}
               </span>
             </Link>

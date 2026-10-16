@@ -27,17 +27,26 @@ pnpm dev                     # http://localhost:3000
 
 ```
 src/
-  app/                  Routes: / · /work · /work/[slug] · /privacy · sitemap, robots, OG images
+  app/                  Routes: / · /work · /work/[slug] · /privacy · /cookies · /terms ·
+                        /accessibility · /security · sitemap, robots, OG images
   proxy.ts              Returns a real 404 for unknown /work/<slug> URLs before rendering
   components/
-    home/               Homepage sections (hero, selected work, studio, approach, materials, contact)
+    home/               Homepage sections (hero, selected work, client perspectives, studio,
+                        approach, materials, questions, contact)
     work/ project/      Project cards, index with hover preview, gallery, next-project link
-    layout/             Header (hide on scroll), native-<dialog> mobile menu, footer
+    layout/             Header (hide on scroll), logo link, native-<dialog> mobile menu, footer
+    contact/            Enquiry form and its accessible custom select
+    consent/            Cookie banner/preferences, consent-gated Google Tag Manager loader
+    assistant/          Floating contact assistant (prepared answers, not live chat)
+    legal/              Shared layout for the legal and information pages
+    ui/                 Section label, arrow link, accordion
     motion/             Reveal, ImageReveal, Parallax and the LazyMotion provider
     media/              AssetImage: next/image from the manifest, labelled placeholder until generated
-  content/              Typed content: site config, projects, studio copy, asset manifest
+  content/              Typed content: site config, projects, studio copy, FAQ, asset manifest
   lib/enquiry/          Shared validation, server action, webhook delivery
+  lib/consent/ tracking/  Consent storage, GTM config and the dataLayer bridge
   lib/ai/               Server-side Gemini provider layer (used only by scripts/)
+docs/                   Analytics, consent, Search Console and SEO setup
 scripts/                Approval-gated image and video generation CLIs
 assets/fonts/           OFL-licensed TTFs used to render Open Graph images at build time
 ```
@@ -99,12 +108,33 @@ The current 17 images were made outside this repository and committed as JPEGs a
 
 The plan is stored under `video` in the manifest and is **not recommended for launch**: the static hero is the LCP element and a video adds weight for a modest gain. If approved, `pnpm video:start --confirm` starts one background job via the Interactions API and records its id; `pnpm video:poll` resumes it (it never starts a second job). This path follows the official `@google/genai` SDK types but has not yet been exercised against the live API.
 
+## Cookies, analytics and consent
+
+The website sets no cookies of its own. Optional tags are possible only through Google Tag Manager, enabled by `NEXT_PUBLIC_GTM_ID`:
+
+- **Without a container ID** (the current state) GTM is never loaded, no cookie banner is shown and the cookie policy says the site uses no cookies or tracking.
+- **With a container ID** a compact first-visit panel offers *Reject optional*, *Accept all* and *Manage preferences* (Analytics and Marketing switches). The choice is kept in `localStorage` for twelve months and can be changed from "Cookie settings" in the footer or on `/cookies`. GTM loads only after a category is allowed, once per page, with Consent Mode defaults set to denied first. Withdrawing a category deletes tracking cookies and reloads the page.
+
+GA4, Google Ads and Meta Pixel are configured as tags **inside GTM**, not in the code. See [docs/analytics-and-seo.md](docs/analytics-and-seo.md) for every ID, trigger, consent setting and the Search Console steps.
+
+## Contact assistant
+
+A small floating button opens a panel with prepared answers (from the FAQ) and links to the enquiry form, the questions and the work. It states that it is not live chat; nothing chosen in it is sent anywhere. It steps aside while the cookie panel, the mobile menu, the questions, the enquiry form or the footer are on screen.
+
+## Legal and information pages
+
+`/privacy`, `/cookies`, `/terms`, `/accessibility` and `/security` describe what the code actually does (the cookie policy is generated from the same configuration as the banner). Each opens with a notice that it is a concept document: it names no legal entity and has not been reviewed by a lawyer. Places where a real practice must add details (controller, lawful basis, governing law, contact addresses) are stated in the text.
+
 ## Secrets
 
-- `.env*` files are git-ignored (except `.env.example`, which holds names only).
+- `.env*` files are git-ignored (except `.env.example`, which holds names and explanations only).
 - Never use `NEXT_PUBLIC_` for keys. Store production values in the hosting provider's environment settings.
 - If a key has ever been pasted into a chat, log or commit, rotate it.
 
 ## SEO
 
-Per-page metadata and canonical URLs, Open Graph and Twitter cards (generated at build time with brand typography and a 560×630 crop of the site or project hero photograph), `sitemap.xml`, `robots.txt`, `WebSite` and `BreadcrumbList` JSON-LD. `SITE_URL` sets the production origin (defaults to `https://linesformstudio.com`). No organisation, review or award markup is emitted, because the practice is fictional.
+Per-page titles, descriptions and canonical URLs, Open Graph and Twitter cards (generated at build time with brand typography and a 560×630 crop of the site or project hero photograph), `sitemap.xml`, `robots.txt`, `WebSite` and `BreadcrumbList` JSON-LD. No organisation, review, rating or FAQ markup is emitted: the practice is fictional and its client statements are illustrative.
+
+`SITE_URL` sets the production origin; on Vercel the project's production domain is used if it is not set. No domain is invented: a production build without either publishes no canonical URLs and an empty sitemap, and warns. `GOOGLE_SITE_VERIFICATION` adds the Search Console meta tag. Details in [docs/analytics-and-seo.md](docs/analytics-and-seo.md).
+
+The site sends baseline security headers (`nosniff`, `strict-origin-when-cross-origin`, `frame-ancestors 'none'`, a restrictive `Permissions-Policy`); see `next.config.ts` and `/security`.

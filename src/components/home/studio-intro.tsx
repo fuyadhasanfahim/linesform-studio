@@ -21,7 +21,7 @@ export function StudioIntro() {
 
         <div className="col-span-12 md:col-span-7 md:col-start-6 md:pl-[calc(var(--gutter)*1.5)] lg:col-span-6 lg:col-start-7 lg:pt-[8%] lg:pl-0">
           <Reveal>
-            <SectionLabel index="02">{studio.label}</SectionLabel>
+            <SectionLabel>{studio.label}</SectionLabel>
             <h2 id="studio-heading" className="t-h2 mt-6 max-w-[16ch]">
               {studio.heading}
             </h2>

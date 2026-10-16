@@ -7,8 +7,8 @@ import { NextProject } from "@/components/project/next-project";
 import { ProjectGallery } from "@/components/project/project-gallery";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
-import { formatIndex, getNextProject, getProject, getProjectIndex, projects } from "@/content/projects";
-import { absoluteUrl, site } from "@/content/site";
+import { getNextProject, getProject, projects } from "@/content/projects";
+import { absoluteUrl, pageUrls, publishAbsoluteUrls, site } from "@/content/site";
 import { JsonLd } from "@/lib/json-ld";
 
 export function generateStaticParams() {
@@ -21,13 +21,14 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   if (!project) return {};
 
   const description = `${project.summary} A conceptual ${project.category.toLowerCase()} by ${site.name}.`;
+  const urls = pageUrls(`/work/${project.slug}`);
   return {
     title: project.title,
     description,
-    alternates: { canonical: `/work/${project.slug}` },
+    alternates: urls.alternates,
     openGraph: {
       type: "article",
-      url: `/work/${project.slug}`,
+      ...urls.openGraphUrl,
       title: `${project.title} — ${site.name}`,
       description,
     },
@@ -40,22 +41,24 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
   const project = getProject(slug);
   if (!project) notFound();
 
-  const index = getProjectIndex(project.slug);
   const next = getNextProject(project.slug);
 
   return (
     <article>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-            { "@type": "ListItem", position: 2, name: "Selected work", item: absoluteUrl("/work") },
-            { "@type": "ListItem", position: 3, name: project.title, item: absoluteUrl(`/work/${project.slug}`) },
-          ],
-        }}
-      />
+      {/* Breadcrumbs need absolute URLs, so they are omitted until an origin is configured. */}
+      {publishAbsoluteUrls ? (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+              { "@type": "ListItem", position: 2, name: "Selected work", item: absoluteUrl("/work") },
+              { "@type": "ListItem", position: 3, name: project.title, item: absoluteUrl(`/work/${project.slug}`) },
+            ],
+          }}
+        />
+      ) : null}
 
       <header className="shell pt-[clamp(2rem,1rem+4vw,5rem)]">
         <ArrowLink href="/work" direction="back" className="border-transparent">
@@ -64,9 +67,7 @@ export default async function ProjectPage({ params }: PageProps<"/work/[slug]">)
 
         <div className="grid-page mt-[clamp(2rem,1rem+4vw,4.5rem)] gap-y-8">
           <div className="col-span-12 lg:col-span-7">
-            <SectionLabel index={`${formatIndex(index)} / ${formatIndex(projects.length - 1)}`}>
-              Concept study
-            </SectionLabel>
+            <SectionLabel>Concept study</SectionLabel>
             <h1 className="t-h1 mt-6">{project.title}</h1>
           </div>
           <p className="t-lead col-span-12 measure self-end lg:col-span-5 lg:col-start-8">{project.intro}</p>

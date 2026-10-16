@@ -4,22 +4,23 @@ import { Reveal } from "@/components/motion/reveal";
 import { ArrowLink } from "@/components/ui/arrow-link";
 import { SectionLabel } from "@/components/ui/section-label";
 import { ProjectIndex, type ProjectRow } from "@/components/work/project-index";
-import { formatIndex, projects } from "@/content/projects";
-import { site } from "@/content/site";
+import { projects } from "@/content/projects";
+import { pageUrls, site } from "@/content/site";
 import { RICH_MOTION_QUERY } from "@/lib/media-queries";
+
+const urls = pageUrls("/work");
 
 export const metadata: Metadata = {
   title: "Selected work",
   description:
     "Four conceptual projects by Linesform Studio: a courtyard house, an apartment renovation, a boutique hotel interior and a public reading pavilion.",
-  alternates: { canonical: "/work" },
-  openGraph: { url: "/work", title: `Selected work — ${site.name}` },
+  alternates: urls.alternates,
+  openGraph: { ...urls.openGraphUrl, title: `Selected work — ${site.name}` },
 };
 
 export default function WorkPage() {
-  const rows: ProjectRow[] = projects.map((project, index) => ({
+  const rows: ProjectRow[] = projects.map((project) => ({
     slug: project.slug,
-    index: formatIndex(index),
     title: project.title,
     category: project.category,
     location: project.location,
@@ -55,7 +56,7 @@ export default function WorkPage() {
       <section aria-labelledby="work-heading" className="shell pt-[clamp(2.5rem,1rem+6vw,7rem)]">
         <div className="grid-page items-end gap-y-8">
           <div className="col-span-12 lg:col-span-7">
-            <SectionLabel index={String(projects.length).padStart(2, "0")}>Projects</SectionLabel>
+            <SectionLabel>Projects</SectionLabel>
             <h1 id="work-heading" className="t-h1 mt-6">
               Selected work
             </h1>

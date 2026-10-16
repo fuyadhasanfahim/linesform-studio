@@ -98,3 +98,78 @@ export const contact = {
   conceptNote:
     "Linesform Studio is a portfolio concept. Enquiries are delivered only when an enquiry service has been connected, and a confirmation is shown only after delivery succeeds.",
 };
+
+/**
+ * Linesform Studio is fictional, so it has no clients. These statements are
+ * illustrative copy that shows how client feedback would be presented; the
+ * page labels every one of them as such. Never add names, ratings or
+ * photographs, and never mark them up as reviews in structured data.
+ */
+export const testimonials = {
+  label: "Client perspectives",
+  heading: "How a quieter process feels.",
+  intro:
+    "Linesform Studio is a portfolio concept, so there are no real clients to quote. The statements below are illustrative, written to show how client feedback would be presented here. They are not words from real people.",
+  attributionPrefix: "Illustrative statement",
+  items: [
+    {
+      quote:
+        "The house asks very little of us. Morning light finds the kitchen, the court holds the evening, and nothing needs explaining.",
+      context: "Private residence",
+    },
+    {
+      quote:
+        "Every material was tested in the room it would live in. By the time work began, there were no surprises left.",
+      context: "Apartment renovation",
+    },
+    {
+      quote: "Guests notice the calm before they notice the design — which is exactly what we asked for.",
+      context: "Hospitality interior",
+    },
+  ],
+};
+
+export const faq = {
+  label: "Questions",
+  heading: "Before you get in touch.",
+  intro:
+    "Practical answers about how the studio works, as presented in this concept. Nothing here is a promise of availability, fees or timescales.",
+  items: [
+    {
+      id: "project-types",
+      question: "What types of projects does the studio take on?",
+      answer:
+        "Houses, apartments and interiors, renovations, hospitality interiors and small cultural or public buildings — the range shown in the selected work. Scale matters less than a clear site and a shared interest in a considered process.",
+    },
+    {
+      id: "locations",
+      question: "Which locations does the studio work in?",
+      answer:
+        "As a portfolio concept, Linesform Studio has no real service area. Location is discussed for each enquiry: travel, local regulations and the collaborators a site needs are agreed case by case rather than promised in advance.",
+    },
+    {
+      id: "enquiry-contents",
+      question: "What should a project enquiry include?",
+      answer:
+        "Where the site is and what is there today, what you would like to build or change, an indicative timeline and budget if you have them, and a few words about how you hope the space will feel. Drawings and photographs can follow later.",
+    },
+    {
+      id: "first-conversation",
+      question: "How does the first conversation work?",
+      answer:
+        "An enquiry is answered with an open conversation about the site, the brief and its constraints. It is not a proposal: its purpose is to understand whether the studio's way of working suits the project.",
+    },
+    {
+      id: "renovations",
+      question: "Does the studio work on renovations and interiors?",
+      answer:
+        "Yes. The Atelier Apartment reworks a 1930s apartment, and Hotel Calcare is an interior within a former stone workshop. Existing buildings receive the same attention to light, material and proportion as new ones.",
+    },
+    {
+      id: "timelines-budgets",
+      question: "What should I know about timelines and budgets?",
+      answer:
+        "Both depend on the site, the scope and the approvals a project needs, so the studio does not quote standard durations or fees. An indicative budget range in your enquiry — or simply “not yet defined” — helps frame the first conversation honestly.",
+    },
+  ],
+};

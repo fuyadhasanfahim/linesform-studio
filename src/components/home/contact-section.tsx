@@ -9,7 +9,7 @@ export function ContactSection() {
     <section id="contact" aria-labelledby="contact-heading" className="shell section-space">
       <div className="grid-page gap-y-14">
         <Reveal className="col-span-12 lg:col-span-5">
-          <SectionLabel index="05">{contact.label}</SectionLabel>
+          <SectionLabel>{contact.label}</SectionLabel>
           <h2 id="contact-heading" className="t-h2 mt-6 max-w-[13ch]">
             {contact.heading}
           </h2>
